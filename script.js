@@ -826,10 +826,70 @@ document.addEventListener('DOMContentLoaded', () => {
         resultContent.innerHTML = resultHTML;
         quizResult.classList.remove('hidden');
 
-        // Smooth scroll to results
+        // Special fireworks animation for Iconic Suite!
+        if (bestRoomKey === 'iconic') {
+            quizResult.classList.add('iconic-result');
+            launchFireworks();
+        } else {
+            quizResult.classList.remove('iconic-result');
+        }
+    }
+
+    function launchFireworks() {
+        // Create fireworks container
+        let fireworksContainer = document.querySelector('.fireworks-container');
+        if (!fireworksContainer) {
+            fireworksContainer = document.createElement('div');
+            fireworksContainer.className = 'fireworks-container';
+            document.body.appendChild(fireworksContainer);
+        }
+
+        const colors = ['#FFD700', '#FFA500', '#FF6347', '#FF69B4', '#00CED1', '#7B68EE', '#32CD32'];
+
+        // Launch multiple fireworks over 5 seconds
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => {
+                createFirework(fireworksContainer, colors);
+            }, i * 300);
+        }
+
+        // Clean up after 8 seconds
         setTimeout(() => {
-            quizResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+            if (fireworksContainer) {
+                fireworksContainer.remove();
+            }
+        }, 8000);
+    }
+
+    function createFirework(container, colors) {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * (window.innerHeight * 0.5) + 50; // Upper half of screen
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        // Create explosion particles
+        const particleCount = 30;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'firework';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.backgroundColor = color;
+
+            const angle = (Math.PI * 2 * i) / particleCount;
+            const velocity = 50 + Math.random() * 100;
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+
+            container.appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 1500);
+        }
     }
 
     function restartQuiz() {
@@ -861,6 +921,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hide results
         quizResult.classList.add('hidden');
+        quizResult.classList.remove('iconic-result');
+
+        // Clean up fireworks if they exist
+        const fireworksContainer = document.querySelector('.fireworks-container');
+        if (fireworksContainer) {
+            fireworksContainer.remove();
+        }
 
         // Show quiz container
         quizContainer.style.display = 'block';
