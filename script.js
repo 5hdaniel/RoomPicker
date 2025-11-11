@@ -539,6 +539,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleAnswer(e) {
         const button = e.currentTarget;
         const points = JSON.parse(button.getAttribute('data-points'));
+        const answerText = button.textContent;
+
+        // Track quiz answer with Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'quiz_answer', {
+                question_number: currentQuestion,
+                answer: answerText,
+                points_awarded: JSON.stringify(points)
+            });
+        }
 
         // Save answer to history
         answerHistory.push({
@@ -580,6 +590,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function previousQuestion() {
         if (currentQuestion <= 1) return;
+
+        // Track back button usage
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'quiz_back_button', {
+                from_question: currentQuestion,
+                to_question: currentQuestion - 1
+            });
+        }
 
         // Get the last answer from history
         const lastAnswer = answerHistory.pop();
@@ -786,6 +804,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const bestRoomKey = calculateBestRoom();
         const bestRoom = rooms[bestRoomKey];
 
+        // Track quiz completion and room recommendation
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'quiz_completed', {
+                recommended_room: bestRoom.name,
+                room_key: bestRoomKey,
+                room_price: bestRoom.price
+            });
+        }
+
         // Build result HTML
         let resultHTML = `
             <div style="text-align: center; margin-bottom: 2rem;">
@@ -836,6 +863,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function launchFireworks() {
+        // Track Iconic Suite fireworks!
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'iconic_suite_fireworks', {
+                event_category: 'quiz',
+                event_label: 'Iconic Suite Achieved'
+            });
+        }
+
         // Create fireworks container
         let fireworksContainer = document.querySelector('.fireworks-container');
         if (!fireworksContainer) {
@@ -893,6 +928,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function restartQuiz() {
+        // Track quiz restart
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'quiz_restart', {
+                event_category: 'quiz',
+                event_label: 'User Restarted Quiz'
+            });
+        }
+
         // Reset scores
         scores = {
             wellness: 0,
