@@ -184,6 +184,32 @@ section h2 {
     transform: scale(0.98);
 }
 
+/* Back Button */
+.back-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--medium-gray);
+    color: var(--dark-gray);
+    border: 2px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background: var(--ocean-blue);
+    color: var(--white);
+    border-color: var(--ocean-blue);
+    transform: translateX(-5px);
+}
+
+.back-btn.hidden {
+    display: none;
+}
+
 /* Quiz Result */
 .quiz-result {
     max-width: 800px;

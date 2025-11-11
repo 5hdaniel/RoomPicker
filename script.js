@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         andy: 0,
         notandy: 0
     };
+    let answerHistory = []; // Track answers for back functionality
 
     // Room Definitions
     const rooms = {
@@ -513,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizResult = document.getElementById('quiz-result');
     const resultContent = document.getElementById('result-content');
     const restartBtn = document.getElementById('restart-quiz');
+    const backBtn = document.getElementById('back-btn');
 
     // Initialize Quiz
     initializeQuiz();
@@ -526,11 +528,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Restart button
         restartBtn.addEventListener('click', restartQuiz);
+
+        // Back button
+        backBtn.addEventListener('click', previousQuestion);
+
+        // Hide back button on first question
+        updateBackButton();
     }
 
     function handleAnswer(e) {
         const button = e.currentTarget;
         const points = JSON.parse(button.getAttribute('data-points'));
+
+        // Save answer to history
+        answerHistory.push({
+            questionNumber: currentQuestion,
+            points: points
+        });
 
         // Add points to scores
         for (const [key, value] of Object.entries(points)) {
@@ -559,6 +573,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show next question
         currentQuestion++;
         questions[currentQuestion - 1].classList.add('active');
+
+        // Update back button visibility
+        updateBackButton();
+    }
+
+    function previousQuestion() {
+        if (currentQuestion <= 1) return;
+
+        // Get the last answer from history
+        const lastAnswer = answerHistory.pop();
+
+        // Subtract those points from scores
+        if (lastAnswer) {
+            for (const [key, value] of Object.entries(lastAnswer.points)) {
+                scores[key] -= value;
+            }
+        }
+
+        // Reset button styles for current question
+        const currentButtons = questions[currentQuestion - 1].querySelectorAll('.option');
+        currentButtons.forEach(btn => {
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.transform = '';
+        });
+
+        // Hide current question
+        questions[currentQuestion - 1].classList.remove('active');
+
+        // Show previous question
+        currentQuestion--;
+        questions[currentQuestion - 1].classList.add('active');
+
+        // Reset button styles for previous question
+        const prevButtons = questions[currentQuestion - 1].querySelectorAll('.option');
+        prevButtons.forEach(btn => {
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.transform = '';
+        });
+
+        // Update back button visibility
+        updateBackButton();
+    }
+
+    function updateBackButton() {
+        if (currentQuestion === 1) {
+            backBtn.classList.add('hidden');
+        } else {
+            backBtn.classList.remove('hidden');
+        }
     }
 
     function calculateBestRoom() {
@@ -780,6 +845,9 @@ document.addEventListener('DOMContentLoaded', () => {
             notandy: 0
         };
 
+        // Reset answer history
+        answerHistory = [];
+
         // Reset question counter
         currentQuestion = 1;
 
@@ -805,6 +873,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 q.classList.remove('active');
             }
         });
+
+        // Update back button (hide on first question)
+        updateBackButton();
 
         // Smooth scroll to quiz
         setTimeout(() => {
