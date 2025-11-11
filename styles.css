@@ -353,6 +353,26 @@ section h2 {
     background: linear-gradient(135deg, #ff7e5f, #feb47b) !important;
 }
 
+.concierge-partial {
+    background: linear-gradient(135deg, #87CEEB, #4682B4) !important;
+}
+
+.concierge {
+    background: linear-gradient(135deg, #5F9EA0, #2F4F4F) !important;
+}
+
+.prime-concierge {
+    background: linear-gradient(135deg, #48D1CC, #008B8B) !important;
+}
+
+.edge-villa {
+    background: linear-gradient(135deg, #DAA520, #B8860B) !important;
+}
+
+.penthouse {
+    background: linear-gradient(135deg, #CD853F, #8B4513) !important;
+}
+
 .celebrity {
     background: linear-gradient(135deg, var(--celebrity-color), #8a2be2) !important;
 }
@@ -404,6 +424,26 @@ section h2 {
 
 .guide-card.sunset {
     border-top-color: #ff7e5f;
+}
+
+.guide-card.concierge-partial {
+    border-top-color: #87CEEB;
+}
+
+.guide-card.concierge {
+    border-top-color: #5F9EA0;
+}
+
+.guide-card.prime-concierge {
+    border-top-color: #48D1CC;
+}
+
+.guide-card.edge-villa {
+    border-top-color: #DAA520;
+}
+
+.guide-card.penthouse {
+    border-top-color: #CD853F;
 }
 
 .guide-card.celebrity {

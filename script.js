@@ -208,6 +208,115 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             price: '$$$$$$',
             bestFor: 'those seeking the absolute ultimate luxury experience - the crown jewel of Celebrity Cruises (Hi Andy! 👋)'
+        },
+        conciergePartial: {
+            name: 'Concierge Class (Partial View)',
+            icon: '🪟',
+            description: 'High-deck Infinite Veranda stateroom with personalized concierge service. View partially blocked by Magic Carpet hardware, but great value.',
+            highlights: [
+                '~243 sq ft with Infinite Veranda',
+                'High-deck location',
+                'Innovative design merges inside and outside',
+                'Personalized Concierge service',
+                'Embarkation Day Concierge Class Lunch',
+                'Welcome bottle of sparkling wine',
+                'Exclusive Destination Seminar',
+                'King sized Cashmere mattress',
+                'Premium bathroom products',
+                'Plush bathrobes, slippers',
+                'Daily delivery of delectable delights'
+            ],
+            price: '$$',
+            bestFor: 'budget-conscious travelers wanting concierge perks without paying full concierge price'
+        },
+        concierge: {
+            name: 'Concierge Class Stateroom',
+            icon: '🎩',
+            description: 'High-deck Infinite Veranda stateroom with personalized concierge service and premium amenities.',
+            highlights: [
+                '~243-369 sq ft (accessible options available)',
+                'High-deck location with clear views',
+                'Infinite Veranda transforms with touch of button',
+                'Floor-to-ceiling windows',
+                'Personalized Concierge service',
+                'Embarkation Day Concierge Class Lunch',
+                'Welcome bottle of sparkling wine',
+                'Exclusive Destination Seminar',
+                'King sized Cashmere mattress',
+                'Premium bathroom products',
+                'Daily delivery of delectable delights',
+                'Plush bathrobes and slippers'
+            ],
+            price: '$$$',
+            bestFor: 'travelers wanting premium service and amenities at a mid-range price'
+        },
+        primeConcierge: {
+            name: 'Prime Concierge Class',
+            icon: '🎖️',
+            description: 'Premium midship location on higher decks with Infinite Veranda and full concierge service.',
+            highlights: [
+                '~243 sq ft with Infinite Veranda',
+                'Midship to forward on higher decks',
+                'Best location for less motion',
+                'Floor-to-ceiling windows',
+                'Personalized Concierge service',
+                'Embarkation Day Concierge Class Lunch',
+                'Welcome bottle of sparkling wine',
+                'Exclusive Destination Seminar',
+                'King sized Cashmere mattress',
+                'Premium bathroom products',
+                'Daily delivery of delectable delights'
+            ],
+            price: '$$$',
+            bestFor: 'travelers wanting concierge service with the best midship location'
+        },
+        edgeVilla: {
+            name: 'Edge Villa',
+            icon: '🏡',
+            description: 'Stunning two-story luxury residence - the only two-story staterooms in the fleet! Direct access to Retreat Sundeck with private plunge pool.',
+            highlights: [
+                '~950 sq ft - 1 bedroom, 2 bathrooms',
+                'TWO-STORY luxury residence (only in fleet!)',
+                'Private terrace with 3-foot-deep plunge pool',
+                'Direct access to The Retreat Sundeck',
+                'Floor-to-ceiling windows',
+                'Marble primary bathroom with whirlpool tub',
+                'Unlimited Specialty Dining Package',
+                'Unlimited Premium Drink Package',
+                'Two bottles of premium spirits or wine',
+                'Butler service with Butler Chat',
+                'Complimentary laundry and unlimited pressing',
+                'Priority check-in and embarkation',
+                'SEA Thermal Suite access',
+                'Full Retreat privileges',
+                'Up to 4 guests'
+            ],
+            price: '$$$$$',
+            bestFor: 'travelers seeking unique two-story living with private plunge pool and direct sundeck access'
+        },
+        penthouse: {
+            name: 'Penthouse Suite',
+            icon: '🌆',
+            description: 'Spacious two-bedroom suite with hot tub, extra-large balcony, and dining space for 8. Perfect for families or groups.',
+            highlights: [
+                '~1,575 sq ft - 2 bedrooms, 2 bathrooms',
+                'Sleeps up to 6 guests',
+                'Dining table seats 8',
+                'Private whirlpool hot tub with views',
+                'Extra-large balcony with seating',
+                'Walk-in closet with generous storage',
+                'Marble primary bathroom with dual sinks',
+                'Unlimited Specialty Dining Package',
+                'Unlimited Premium Drink Package',
+                'Two bottles of premium spirits or wine',
+                'Butler service with Butler Chat',
+                'Complimentary laundry and unlimited pressing',
+                'Priority check-in and embarkation',
+                'SEA Thermal Suite access',
+                'Full Retreat privileges'
+            ],
+            price: '$$$$$',
+            bestFor: 'families or groups wanting spacious two-bedroom luxury with hot tub and full Retreat'
         }
     };
 
@@ -280,7 +389,12 @@ document.addEventListener('DOMContentLoaded', () => {
             skySuite: 0,
             sunsetSky: 0,
             celebrity: 0,
-            royal: 0
+            royal: 0,
+            conciergePartial: 0,
+            concierge: 0,
+            primeConcierge: 0,
+            edgeVilla: 0,
+            penthouse: 0
         };
 
         // AquaClass scoring
@@ -322,6 +436,31 @@ document.addEventListener('DOMContentLoaded', () => {
         roomScores.royal += scores.luxury * 3;
         roomScores.royal += scores.space * 2;
         roomScores.royal += scores.family * 1.5;
+
+        // Concierge Class (Partial View) scoring (budget-friendly with perks)
+        roomScores.conciergePartial += scores.value * 3;
+        roomScores.conciergePartial += scores.couple * 1.5;
+
+        // Concierge Class scoring (mid-range with service)
+        roomScores.concierge += scores.value * 2;
+        roomScores.concierge += scores.luxury * 1;
+        roomScores.concierge += scores.couple * 2;
+
+        // Prime Concierge Class scoring (mid-range with best location)
+        roomScores.primeConcierge += scores.value * 1.5;
+        roomScores.primeConcierge += scores.luxury * 1.5;
+        roomScores.primeConcierge += scores.couple * 2;
+
+        // Edge Villa scoring (unique two-story with plunge pool)
+        roomScores.edgeVilla += scores.luxury * 3;
+        roomScores.edgeVilla += scores.space * 2.5;
+        roomScores.edgeVilla += scores.couple * 2;
+        roomScores.edgeVilla += scores.family * 1.5;
+
+        // Penthouse Suite scoring (large family suite)
+        roomScores.penthouse += scores.luxury * 2.5;
+        roomScores.penthouse += scores.space * 3;
+        roomScores.penthouse += scores.family * 3;
 
         // Find room with highest score
         let bestRoom = 'aquaclass';
