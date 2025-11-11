@@ -341,6 +341,18 @@ section h2 {
     background: linear-gradient(135deg, var(--aqua-sky-color), #20c997) !important;
 }
 
+.magic-carpet {
+    background: linear-gradient(135deg, #ff6b9d, #c06c84) !important;
+}
+
+.sky {
+    background: linear-gradient(135deg, #89CFF0, #4a90e2) !important;
+}
+
+.sunset {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b) !important;
+}
+
 .celebrity {
     background: linear-gradient(135deg, var(--celebrity-color), #8a2be2) !important;
 }
@@ -380,6 +392,18 @@ section h2 {
 
 .guide-card.aqua-sky {
     border-top-color: var(--aqua-sky-color);
+}
+
+.guide-card.magic-carpet {
+    border-top-color: #ff6b9d;
+}
+
+.guide-card.sky {
+    border-top-color: #89CFF0;
+}
+
+.guide-card.sunset {
+    border-top-color: #ff7e5f;
 }
 
 .guide-card.celebrity {

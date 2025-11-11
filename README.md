@@ -5,8 +5,9 @@ An interactive one-page website to help cruise travelers compare and choose the 
 ## 🌊 Features
 
 ### 📋 Interactive Quiz
-- **6-question quiz** that analyzes your preferences
+- **7-question quiz** that analyzes your preferences
 - Smart recommendation algorithm based on your answers
+- Special personalized recommendation for Andy!
 - Questions cover:
   - Travel priorities (wellness vs. luxury)
   - Group size
@@ -14,14 +15,19 @@ An interactive one-page website to help cruise travelers compare and choose the 
   - Amenity preferences
   - Budget considerations
   - Dining preferences
+  - Personalization
 
 ### 📊 Comprehensive Comparison Table
-Compare all 5 Celebrity Edge-Class accommodation types side-by-side:
+Compare all 9 Celebrity Edge-Class accommodation types side-by-side:
 - **AquaClass Stateroom** - Budget-friendly wellness focus
 - **Prime AquaClass Stateroom** - Premium location with wellness benefits
 - **Aqua Sky Suite** - Hybrid wellness + luxury suite experience
+- **Magic Carpet Sky Suite** - Unique Magic Carpet views with Retreat
+- **Sky Suite** - High-deck panoramic views with Retreat
+- **Sunset Sky Suite** - Romantic aft-facing sunset views
 - **Celebrity Suite** - Spacious luxury with Retreat privileges
 - **Royal Suite** - Ultimate VIP experience
+- **Iconic Suite** - Largest suite in Celebrity fleet (special recommendation)
 
 ### 🎯 Quick Decision Guide
 Visual cards highlighting each room type with:

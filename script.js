@@ -66,6 +66,73 @@ document.addEventListener('DOMContentLoaded', () => {
             price: '$$$$',
             bestFor: 'wellness lovers who want the complete luxury suite experience'
         },
+        magicCarpet: {
+            name: 'Magic Carpet Sky Suite',
+            icon: '🎪',
+            description: 'Unique studio suite with stunning views of the innovative Magic Carpet platform and spacious balcony.',
+            highlights: [
+                '~400 sq ft studio suite',
+                'Unique view of the Magic Carpet',
+                'Large bathroom',
+                'Spacious veranda with lounge seating',
+                'Floor-to-ceiling sliding glass doors',
+                'The Retreat full access',
+                'Luminae at The Retreat',
+                'Butler service with Butler Chat',
+                'Unlimited Premium Drink Package',
+                'Premium Wi-Fi package',
+                'Full in-suite dining service',
+                'Priority check-in and embarkation',
+                'Reserved theater seating'
+            ],
+            price: '$$$$',
+            bestFor: 'couples wanting a unique Retreat experience with spectacular Magic Carpet views'
+        },
+        skySuite: {
+            name: 'Sky Suite',
+            icon: '☁️',
+            description: 'Elevated studio suite on high-deck with spacious balcony, offering stunning ocean views and full Retreat privileges.',
+            highlights: [
+                '~398-517 sq ft studio suite (accessible options available)',
+                'High-deck location for panoramic views',
+                'Spacious veranda with lounge seating',
+                'Floor-to-ceiling sliding glass doors',
+                'The Retreat full access',
+                'Luminae at The Retreat',
+                'Butler service with Butler Chat',
+                'Unlimited Premium Drink Package',
+                'Premium Wi-Fi package',
+                'Full in-suite dining service',
+                'Priority check-in and embarkation',
+                'Up to 4 guests',
+                'Afternoon tea events'
+            ],
+            price: '$$$$',
+            bestFor: 'families or couples wanting high-deck views with Retreat privileges'
+        },
+        sunsetSky: {
+            name: 'Sunset Sky Suite',
+            icon: '🌅',
+            description: 'Large aft-facing studio suite perfect for watching stunning sunsets from your private spacious balcony.',
+            highlights: [
+                '~462 sq ft studio suite',
+                'Aft-facing for spectacular sunset views',
+                'Large bathroom',
+                'Spacious veranda with lounge seating',
+                'Floor-to-ceiling sliding glass doors',
+                'The Retreat full access',
+                'Luminae at The Retreat',
+                'Butler service with Butler Chat',
+                'Unlimited Premium Drink Package',
+                'Premium Wi-Fi package',
+                'Full in-suite dining service',
+                'Priority check-in and embarkation',
+                'Reserved theater seating',
+                'Afternoon tea events'
+            ],
+            price: '$$$$',
+            bestFor: 'sunset lovers and couples seeking romantic aft-facing views with luxury'
+        },
         celebrity: {
             name: 'Celebrity Suite',
             icon: '👑',
@@ -209,6 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
             aquaclass: 0,
             primeAquaclass: 0,
             aquaSky: 0,
+            magicCarpet: 0,
+            skySuite: 0,
+            sunsetSky: 0,
             celebrity: 0,
             royal: 0
         };
@@ -223,10 +293,25 @@ document.addEventListener('DOMContentLoaded', () => {
         roomScores.primeAquaclass += scores.value * 2;
         roomScores.primeAquaclass += scores.couple * 2;
 
-        // Aqua Sky Suite scoring
+        // Aqua Sky Suite scoring (wellness + luxury)
         roomScores.aquaSky += scores.wellness * 3;
         roomScores.aquaSky += scores.luxury * 2;
         roomScores.aquaSky += Math.min(scores.couple, scores.family) * 1.5;
+
+        // Magic Carpet Sky Suite scoring (unique views + luxury)
+        roomScores.magicCarpet += scores.luxury * 2.5;
+        roomScores.magicCarpet += scores.space * 2;
+        roomScores.magicCarpet += scores.couple * 2;
+
+        // Sky Suite scoring (high-deck views + retreat)
+        roomScores.skySuite += scores.luxury * 2.5;
+        roomScores.skySuite += scores.space * 2.5;
+        roomScores.skySuite += scores.family * 2;
+
+        // Sunset Sky Suite scoring (romantic sunset views)
+        roomScores.sunsetSky += scores.luxury * 2.5;
+        roomScores.sunsetSky += scores.space * 2;
+        roomScores.sunsetSky += scores.couple * 2.5;
 
         // Celebrity Suite scoring
         roomScores.celebrity += scores.luxury * 2;
