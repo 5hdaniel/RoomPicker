@@ -18,21 +18,36 @@ An interactive one-page website to help cruise travelers compare and choose the 
   - Personalization
 
 ### 📊 Comprehensive Comparison Table
-Compare all 14 Celebrity Edge-Class accommodation types side-by-side:
+Compare all 19 Celebrity Edge-Class accommodation types side-by-side:
+
+**Basic Staterooms (Entry-Level)**
+- **Deluxe Porthole View with Veranda** - Entry-level with balcony, central location
+- **Edge Stateroom with Infinite Veranda (Partial View)** - Budget Infinite Veranda
+- **Edge Stateroom with Infinite Veranda** - Standard Infinite Veranda
+- **Prime Edge Stateroom with Infinite Veranda** - Best standard location (midship/high-deck)
+- **Sunset Veranda Stateroom** - Most spacious standard (317 sq ft, sunset views)
+
+**Wellness & Specialty**
 - **AquaClass Stateroom** - Budget-friendly wellness focus
 - **Prime AquaClass Stateroom** - Premium location with wellness benefits
 - **Aqua Sky Suite** - Hybrid wellness + luxury suite experience
+
+**Concierge Class (Mid-Tier Service)**
 - **Concierge Class (Partial View)** - Budget-friendly with concierge perks
 - **Concierge Class Stateroom** - Mid-range with personalized service
 - **Prime Concierge Class** - Best location with concierge service
+
+**Sky Suites (The Retreat)**
 - **Magic Carpet Sky Suite** - Unique Magic Carpet views with Retreat
 - **Sky Suite** - High-deck panoramic views with Retreat
 - **Sunset Sky Suite** - Romantic aft-facing sunset views
+
+**Premium Suites (The Retreat)**
 - **Celebrity Suite** - Spacious luxury with Retreat privileges
 - **Edge Villa** - TWO-STORY with private plunge pool (unique!)
 - **Penthouse Suite** - 2-bedroom family suite with hot tub
 - **Royal Suite** - Ultimate VIP experience
-- **Iconic Suite** - Largest suite in Celebrity fleet (special recommendation for Andy!)
+- **Iconic Suite** - Largest suite in Celebrity fleet (2,581 sq ft - special recommendation for Andy!)
 
 ### 🎯 Quick Decision Guide
 Visual cards highlighting each room type with:

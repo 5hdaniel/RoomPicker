@@ -17,6 +17,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Room Definitions
     const rooms = {
+        deluxePorthole: {
+            name: 'Deluxe Porthole View with Veranda',
+            icon: '🔵',
+            description: 'Central ship location with floor-to-ceiling view and balcony. Great entry-level option with veranda access.',
+            highlights: [
+                '~241 sq ft with balcony',
+                'Central ship location',
+                'Floor-to-ceiling view',
+                'King sized Cashmere Mattress',
+                'Plush bathrobes and towels',
+                'Premium bathroom products',
+                'Plentiful storage space',
+                'In-room Automation'
+            ],
+            price: '$',
+            bestFor: 'budget travelers wanting veranda access in central location'
+        },
+        edgeInfinitePartial: {
+            name: 'Edge Stateroom with Infinite Veranda (Partial View)',
+            icon: '🪟',
+            description: 'Aft/forward location with Infinite Veranda. View partially obstructed but one of the largest veranda staterooms at sea!',
+            highlights: [
+                '~243 sq ft with Infinite Veranda',
+                'One of the largest veranda staterooms at sea',
+                'Floor-to-ceiling windows transform to balcony',
+                'Innovative inside/outside design',
+                'Aft or forward ship areas',
+                'King sized Cashmere Mattress',
+                'Plush bathrobes and towels',
+                'Budget-friendly option'
+            ],
+            price: '$',
+            bestFor: 'value seekers wanting Infinite Veranda without paying premium for location'
+        },
+        edgeInfinite: {
+            name: 'Edge Stateroom with Infinite Veranda',
+            icon: '🌊',
+            description: 'Standard Infinite Veranda stateroom in aft/forward areas. Innovative design merges inside and outside space.',
+            highlights: [
+                '~243 sq ft with Infinite Veranda',
+                'One of the largest veranda staterooms at sea',
+                'Floor-to-ceiling windows transform to balcony',
+                'Touch of button veranda access',
+                'Closer connection to the ocean',
+                'King sized Cashmere Mattress',
+                'Plush bathrobes and towels',
+                'Great standard option'
+            ],
+            price: '$$',
+            bestFor: 'travelers wanting Infinite Veranda experience at standard pricing'
+        },
+        primeEdgeInfinite: {
+            name: 'Prime Edge Stateroom with Infinite Veranda',
+            icon: '⭐',
+            description: 'Premium midship to forward location on higher decks with Infinite Veranda. Best standard stateroom location!',
+            highlights: [
+                '~243-369 sq ft (accessible options available)',
+                'Midship to forward on HIGHER DECKS',
+                'Best location for stability',
+                'One of the largest veranda staterooms',
+                'Floor-to-ceiling Infinite Veranda',
+                'Veranda with seating area',
+                'King sized Cashmere Mattress',
+                'Premium location at great value'
+            ],
+            price: '$$',
+            bestFor: 'travelers wanting best location without concierge or suite upgrade'
+        },
+        sunsetVeranda: {
+            name: 'Sunset Veranda Stateroom',
+            icon: '🌅',
+            description: 'Spacious aft-facing stateroom with extra-large balcony. Most spacious Edge veranda - watch the horizon drift away!',
+            highlights: [
+                '~317 sq ft - MOST SPACIOUS Edge veranda',
+                'Aft-facing balcony at stern',
+                'Extra-large balcony',
+                'Mesmerizing sunset views',
+                'Floor-to-ceiling window',
+                'King sized Cashmere Mattress',
+                'Plush bathrobes and towels',
+                'Extra space without suite pricing'
+            ],
+            price: '$$',
+            bestFor: 'travelers wanting extra space and sunset views at standard pricing'
+        },
         aquaclass: {
             name: 'AquaClass Stateroom',
             icon: '🧘',
@@ -382,6 +467,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Scoring algorithm to determine best room match
         const roomScores = {
+            deluxePorthole: 0,
+            edgeInfinitePartial: 0,
+            edgeInfinite: 0,
+            primeEdgeInfinite: 0,
+            sunsetVeranda: 0,
             aquaclass: 0,
             primeAquaclass: 0,
             aquaSky: 0,
@@ -396,6 +486,23 @@ document.addEventListener('DOMContentLoaded', () => {
             edgeVilla: 0,
             penthouse: 0
         };
+
+        // Basic Staterooms scoring (most budget-friendly)
+        roomScores.deluxePorthole += scores.value * 4;
+        roomScores.deluxePorthole += scores.couple * 1;
+
+        roomScores.edgeInfinitePartial += scores.value * 4;
+        roomScores.edgeInfinitePartial += scores.couple * 1.5;
+
+        roomScores.edgeInfinite += scores.value * 3;
+        roomScores.edgeInfinite += scores.couple * 2;
+
+        roomScores.primeEdgeInfinite += scores.value * 2.5;
+        roomScores.primeEdgeInfinite += scores.couple * 2;
+
+        roomScores.sunsetVeranda += scores.value * 2.5;
+        roomScores.sunsetVeranda += scores.space * 1.5;
+        roomScores.sunsetVeranda += scores.couple * 2.5;
 
         // AquaClass scoring
         roomScores.aquaclass += scores.wellness * 2;

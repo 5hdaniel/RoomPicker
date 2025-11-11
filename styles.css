@@ -329,6 +329,10 @@ section h2 {
 }
 
 /* Room Type Headers */
+.basic {
+    background: linear-gradient(135deg, #708090, #2F4F4F) !important;
+}
+
 .aqua {
     background: linear-gradient(135deg, var(--aqua-color), #17a2b8) !important;
 }
@@ -400,6 +404,10 @@ section h2 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border-top: 4px solid var(--ocean-blue);
+}
+
+.guide-card.basic {
+    border-top-color: #708090;
 }
 
 .guide-card.aqua {
