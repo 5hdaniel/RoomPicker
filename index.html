@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Edge-Class Room Picker | Find Your Perfect Stateroom</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1>⚓ Celebrity Edge-Class Room Picker</h1>
+            <p class="tagline">Find your perfect stateroom for an unforgettable cruise experience</p>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <div class="container">
+            <a href="#quiz" class="nav-btn">Take the Quiz</a>
+            <a href="#compare" class="nav-btn">Compare Rooms</a>
+        </div>
+    </nav>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <h2>🧭 Find Your Perfect Room</h2>
+            <p class="section-intro">Answer a few questions to discover which Celebrity Edge-class accommodation suits you best!</p>
+
+            <div id="quiz-container" class="quiz-container">
+                <!-- Question 1 -->
+                <div class="question active" data-question="1">
+                    <h3>What's most important to you on a cruise?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"wellness": 3}'>Wellness & spa experiences</button>
+                        <button class="option" data-points='{"luxury": 3}'>Ultimate luxury & space</button>
+                        <button class="option" data-points='{"value": 2, "wellness": 1}'>Great value with spa access</button>
+                        <button class="option" data-points='{"luxury": 2, "space": 1}'>Comfort & extra space</button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question" data-question="2">
+                    <h3>How many people are traveling with you?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"couple": 2}'>Just me or my partner (2 guests)</button>
+                        <button class="option" data-points='{"family": 2}'>Small family or friends (3-4 guests)</button>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question" data-question="3">
+                    <h3>How important is butler service to you?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"luxury": 3}'>Essential - I want full VIP treatment</button>
+                        <button class="option" data-points='{"luxury": 1}'>Nice to have, but not necessary</button>
+                        <button class="option" data-points='{"value": 2}'>Not important - I prefer to be independent</button>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question" data-question="4">
+                    <h3>Which amenities appeal to you most?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"wellness": 3}'>Thermal suite, yoga mats, spa products</button>
+                        <button class="option" data-points='{"luxury": 3}'>Whirlpool tub, premium bar, specialty dining</button>
+                        <button class="option" data-points='{"wellness": 2, "luxury": 1}'>Mix of wellness and luxury perks</button>
+                        <button class="option" data-points='{"space": 2}'>Just want great views and comfortable space</button>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question" data-question="5">
+                    <h3>What's your budget preference?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"value": 3}'>Budget-friendly with good perks</button>
+                        <button class="option" data-points='{"value": 1, "space": 1}'>Mid-range with more space</button>
+                        <button class="option" data-points='{"luxury": 2}'>Premium - I want the best</button>
+                        <button class="option" data-points='{"luxury": 3}'>Money is no object</button>
+                    </div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question" data-question="6">
+                    <h3>How important is exclusive dining access?</h3>
+                    <div class="options">
+                        <button class="option" data-points='{"wellness": 2}'>I want Blu (AquaClass restaurant)</button>
+                        <button class="option" data-points='{"luxury": 2}'>I want Luminae and The Retreat</button>
+                        <button class="option" data-points='{"luxury": 3}'>Unlimited specialty dining package</button>
+                        <button class="option" data-points='{"value": 1}'>Main dining room is fine</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-result" class="quiz-result hidden">
+                <h3>Your Perfect Match:</h3>
+                <div id="result-content"></div>
+                <button id="restart-quiz" class="restart-btn">Take Quiz Again</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table Section -->
+    <section id="compare" class="comparison-section">
+        <div class="container">
+            <h2>📊 Full Room Comparison</h2>
+            <p class="section-intro">Compare all Celebrity Edge-Class accommodations side by side</p>
+
+            <div class="table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="room-type aqua">AquaClass Stateroom</th>
+                            <th class="room-type prime-aqua">Prime AquaClass</th>
+                            <th class="room-type aqua-sky">Aqua Sky Suite</th>
+                            <th class="room-type celebrity">Celebrity Suite</th>
+                            <th class="room-type royal">Royal Suite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="feature-label">Approx. Size</td>
+                            <td>~243 sq ft</td>
+                            <td>~243 – 369 sq ft</td>
+                            <td>~397 sq ft</td>
+                            <td>~501 sq ft</td>
+                            <td>~759 sq ft</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Occupancy</td>
+                            <td>Up to 2 guests</td>
+                            <td>Up to 2 guests</td>
+                            <td>Up to 4 guests</td>
+                            <td>Up to 4 guests</td>
+                            <td>Up to 4 guests</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Layout</td>
+                            <td>Studio (bed + sitting + infinite veranda)</td>
+                            <td>Same as AquaClass, midship location</td>
+                            <td>Open studio suite, 1 bath</td>
+                            <td>Open studio suite with split bath</td>
+                            <td>1-bedroom, 1.5 bath, separate living & dining</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Veranda / Balcony</td>
+                            <td>Infinite Veranda</td>
+                            <td>Infinite Veranda, higher deck/midship</td>
+                            <td>Traditional veranda w/ lounge seating</td>
+                            <td>Larger veranda w/ dining area</td>
+                            <td>Extra-large balcony w/ dining & seating</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="feature-label">Spa / Wellness Access</td>
+                            <td class="has-perk">✔ SEA Thermal Suite + Spa Concierge</td>
+                            <td class="has-perk">✔ SEA Thermal Suite + Spa Concierge</td>
+                            <td class="has-perk">✔ SEA Thermal Suite + Spa Concierge + in-room fitness</td>
+                            <td class="no-perk">✖ No AquaClass benefits</td>
+                            <td class="has-perk">✔ SEA Thermal Suite access</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="feature-label">Dining Access</td>
+                            <td class="has-perk">Blu</td>
+                            <td class="has-perk">Blu</td>
+                            <td class="has-perk">Blu + Luminae @ The Retreat</td>
+                            <td class="has-perk">Luminae @ The Retreat</td>
+                            <td class="has-perk">Luminae @ The Retreat + Unlimited Specialty Dining</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="feature-label">Retreat Privileges</td>
+                            <td class="no-perk">✖ No Retreat access</td>
+                            <td class="no-perk">✖ No Retreat access</td>
+                            <td class="has-perk">✔ Full Retreat (Lounge, Sundeck, Luminae, Butler)</td>
+                            <td class="has-perk">✔ Full Retreat</td>
+                            <td class="has-perk">✔ Full Retreat</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Drink & Wi-Fi Packages</td>
+                            <td>Standard</td>
+                            <td>Standard</td>
+                            <td>Premium Drink + Premium Wi-Fi</td>
+                            <td>Premium Drink + Premium Wi-Fi</td>
+                            <td>Unlimited Premium Drink + Premium Wi-Fi</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">In-Suite Amenities</td>
+                            <td>Yoga mats, 2 bottled waters daily, eco products</td>
+                            <td>Same, higher location</td>
+                            <td>In-suite fitness, spa products, minibar, butler</td>
+                            <td>Larger sitting area, minibar</td>
+                            <td>Whirlpool tub, espresso, spirits, daily bar, laundry</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Laundry / Pressing</td>
+                            <td class="no-perk">✖</td>
+                            <td class="no-perk">✖</td>
+                            <td class="no-perk">✖</td>
+                            <td class="no-perk">✖</td>
+                            <td class="has-perk">✔ Included + unlimited pressing</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="feature-label">Butler Service</td>
+                            <td class="no-perk">✖</td>
+                            <td class="no-perk">✖</td>
+                            <td class="has-perk">✔</td>
+                            <td class="has-perk">✔</td>
+                            <td class="has-perk">✔</td>
+                        </tr>
+                        <tr>
+                            <td class="feature-label">Ideal For</td>
+                            <td>Wellness-focused cruisers on a budget</td>
+                            <td>Same, with better view/location</td>
+                            <td>Wellness lovers wanting full suite treatment</td>
+                            <td>Guests wanting more space & luxury</td>
+                            <td>Travelers seeking full luxury, privacy & space</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Guide Section -->
+    <section class="guide-section">
+        <div class="container">
+            <h2>✅ Quick Decision Guide</h2>
+            <div class="guide-grid">
+                <div class="guide-card aqua">
+                    <h3>AquaClass Stateroom</h3>
+                    <p class="price-tier">Budget-Friendly Wellness</p>
+                    <p>Spa-focused, cozy, and elegant. Perfect for two guests who want Blu dining and Thermal Suite access without paying suite prices.</p>
+                    <ul class="highlights">
+                        <li>✔ Blu exclusive restaurant</li>
+                        <li>✔ SEA Thermal Suite access</li>
+                        <li>✔ Infinite Veranda</li>
+                        <li>✔ Wellness amenities</li>
+                    </ul>
+                </div>
+
+                <div class="guide-card prime-aqua">
+                    <h3>Prime AquaClass</h3>
+                    <p class="price-tier">Better Location</p>
+                    <p>Same as AquaClass with premium midship location and better views from higher decks. Best of both worlds!</p>
+                    <ul class="highlights">
+                        <li>✔ All AquaClass benefits</li>
+                        <li>✔ Superior location</li>
+                        <li>✔ Higher deck views</li>
+                        <li>✔ More accessibility options</li>
+                    </ul>
+                </div>
+
+                <div class="guide-card aqua-sky">
+                    <h3>Aqua Sky Suite</h3>
+                    <p class="price-tier">Wellness Meets Luxury</p>
+                    <p>The "bridge" between spa and suite. Includes both Blu and The Retreat perks. Ideal for wellness with butler service.</p>
+                    <ul class="highlights">
+                        <li>✔ Blu + Luminae dining</li>
+                        <li>✔ Full Retreat access</li>
+                        <li>✔ Butler service</li>
+                        <li>✔ In-suite fitness</li>
+                        <li>✔ Premium packages</li>
+                    </ul>
+                </div>
+
+                <div class="guide-card celebrity">
+                    <h3>Celebrity Suite</h3>
+                    <p class="price-tier">Spacious Luxury</p>
+                    <p>Larger, more traditional suite feel with The Retreat access. Excellent for couples or small families valuing space.</p>
+                    <ul class="highlights">
+                        <li>✔ 501 sq ft</li>
+                        <li>✔ The Retreat privileges</li>
+                        <li>✔ Butler service</li>
+                        <li>✔ Premium packages</li>
+                        <li>✔ Split bathroom</li>
+                    </ul>
+                </div>
+
+                <div class="guide-card royal">
+                    <h3>Royal Suite</h3>
+                    <p class="price-tier">Ultimate VIP Experience</p>
+                    <p>True luxury suite with private bedroom, whirlpool, included specialty dining, spirits, and laundry. Full VIP cruise experience.</p>
+                    <ul class="highlights">
+                        <li>✔ 759 sq ft</li>
+                        <li>✔ Separate bedroom</li>
+                        <li>✔ Unlimited specialty dining</li>
+                        <li>✔ Whirlpool tub</li>
+                        <li>✔ Included laundry</li>
+                        <li>✔ Premium spirits & bar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hierarchy Section -->
+    <section class="hierarchy-section">
+        <div class="container">
+            <h2>🧭 Celebrity Edge-Class Hierarchy</h2>
+            <div class="hierarchy-grid">
+                <div class="tier-card">
+                    <div class="tier-label wellness">Wellness-Class (No Retreat)</div>
+                    <h4>AquaClass / Prime AquaClass Staterooms</h4>
+                    <p>Spa-centered experience with Blu dining and Thermal Suite access.</p>
+                </div>
+                <div class="tier-card">
+                    <div class="tier-label bridge">Bridge Tier (Wellness + Luxury)</div>
+                    <h4>Aqua Sky Suite</h4>
+                    <p>Hybrid of AquaClass wellness benefits and full Retreat suite service.</p>
+                </div>
+                <div class="tier-card">
+                    <div class="tier-label suite">Suite-Class (The Retreat)</div>
+                    <h4>Celebrity Suite</h4>
+                    <p>Larger space and suite perks, but not spa-focused.</p>
+                </div>
+                <div class="tier-card">
+                    <div class="tier-label premium">Top Suite-Class (The Retreat Premium)</div>
+                    <h4>Royal Suite</h4>
+                    <p>Separate rooms, luxury extras (specialty dining, laundry, premium bar).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Celebrity Edge-Class Room Picker | Not affiliated with Celebrity Cruises</p>
+            <p class="disclaimer">This is an informational tool. Please verify all details with Celebrity Cruises before booking.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
