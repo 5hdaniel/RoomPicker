@@ -789,3 +789,136 @@ html {
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 60px rgba(212, 175, 55, 0.6);
     }
 }
+
+/* Privacy Policy Styles */
+.privacy-section {
+    background: var(--white);
+    padding: 3rem 2rem;
+}
+
+.privacy-content {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.privacy-content h2 {
+    color: var(--navy);
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.privacy-content h3 {
+    color: var(--ocean-blue);
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-content h4 {
+    color: var(--ocean-blue);
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.privacy-content p {
+    color: var(--dark-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.privacy-content ul {
+    margin: 1rem 0 1.5rem 2rem;
+    line-height: 1.8;
+}
+
+.privacy-content li {
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.privacy-content a {
+    color: var(--ocean-blue);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.privacy-content a:hover {
+    color: var(--aqua);
+}
+
+.last-updated {
+    font-style: italic;
+    color: var(--dark-gray);
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.back-to-home {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--medium-gray);
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--ocean-blue);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back:hover {
+    background: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.privacy-notice {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 1rem;
+    line-height: 1.6;
+}
+
+.privacy-notice a {
+    color: var(--aqua);
+    text-decoration: underline;
+}
+
+.privacy-notice a:hover {
+    color: var(--gold);
+}
+
+/* Privacy Policy Responsive */
+@media (max-width: 768px) {
+    .privacy-content {
+        padding: 1.5rem;
+    }
+
+    .privacy-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .privacy-content h3 {
+        font-size: 1.4rem;
+    }
+
+    .privacy-content h4 {
+        font-size: 1.2rem;
+    }
+
+    .privacy-content ul {
+        margin-left: 1.5rem;
+    }
+}
