@@ -3,14 +3,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Quiz State
     let currentQuestion = 1;
-    const totalQuestions = 6;
+    const totalQuestions = 7;
     let scores = {
         wellness: 0,
         luxury: 0,
         value: 0,
         space: 0,
         couple: 0,
-        family: 0
+        family: 0,
+        andy: 0,
+        notandy: 0
     };
 
     // Room Definitions
@@ -99,6 +101,46 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             price: '$$$$$',
             bestFor: 'travelers seeking the ultimate VIP experience with maximum space and luxury'
+        },
+        iconic: {
+            name: 'Iconic Suite',
+            icon: '🏰',
+            description: 'The absolute pinnacle of Celebrity Cruises - the largest suite in the entire fleet with unparalleled luxury and amenities!',
+            highlights: [
+                '2,581 sq ft - 2 bedrooms, 2 bathrooms',
+                'Sleeps up to 6 guests',
+                'Private sundeck with 270° ocean views',
+                'Private hot tub and double daybed on terrace',
+                'Panoramic views from above the bridge',
+                'Floor-to-ceiling windows throughout',
+                'Private butler\'s pantry',
+                'In-room Peloton available',
+                'Dual sinks, full shower, and whirlpool tub',
+                'Unlimited Specialty Dining Package',
+                'Unlimited Premium Drink Package',
+                'Two complimentary bottles of premium spirits or wine',
+                'Personalized minibar stocked daily',
+                'Full in-suite breakfast, lunch, dinner service',
+                'Premium in-suite coffee set-up',
+                'Dedicated butler service with Butler Chat',
+                'Destination Experience Specialist',
+                'Priority check-in and boarding',
+                'Complimentary laundry and unlimited pressing',
+                'Priority departure and embarkation',
+                'Reserved theater seating on Evening Chic nights',
+                'The Retreat Lounge with gourmet bites',
+                'The Retreat Sundeck with exclusive pool',
+                'Luminae at The Retreat by Daniel Boulud',
+                'Afternoon tea events in The Retreat Lounge',
+                'Premium Wi-Fi package',
+                'SEA Thermal Suite access',
+                'Premium Celebrity Cashmere Mattress with Retreat bedding',
+                'Exclusive complimentary sleepwear',
+                'Complimentary beach towel, shoeshine, umbrella services',
+                'Welcome bottle of bubbles'
+            ],
+            price: '$$$$$$',
+            bestFor: 'those seeking the absolute ultimate luxury experience - the crown jewel of Celebrity Cruises (Hi Andy! 👋)'
         }
     };
 
@@ -157,6 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateBestRoom() {
+        // Special case: If the user is Andy, they get the Iconic Suite!
+        if (scores.andy > 0) {
+            return 'iconic';
+        }
+
         // Scoring algorithm to determine best room match
         const roomScores = {
             aquaclass: 0,
@@ -267,7 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
             value: 0,
             space: 0,
             couple: 0,
-            family: 0
+            family: 0,
+            andy: 0,
+            notandy: 0
         };
 
         // Reset question counter
