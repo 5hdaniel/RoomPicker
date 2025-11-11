@@ -18,9 +18,19 @@ An interactive one-page website to help cruise travelers compare and choose the 
   - Personalization
 
 ### 📊 Comprehensive Comparison Table
-Compare all 19 Celebrity Edge-Class accommodation types side-by-side:
+Compare all 25 Celebrity Edge-Class accommodation types side-by-side:
 
-**Basic Staterooms (Entry-Level)**
+**Inside Staterooms (Most Affordable - No Windows)**
+- **Inside Stateroom** - Most affordable option (181 sq ft, no windows)
+- **Deluxe Inside Stateroom** - Larger inside stateroom (202-231 sq ft, 20% more space)
+
+**Ocean View Staterooms (Budget-Friendly with Windows - No Balcony)**
+- **Ocean View** - Budget-friendly with large window (200 sq ft, Deck 3)
+- **Prime Ocean View Stateroom** - Better midship/higher deck location (200 sq ft)
+- **Deluxe Ocean View** - Up to 70% more space with forward window (238-348 sq ft)
+- **Panoramic Ocean View** - Floor-to-ceiling glass for dramatic views (212 sq ft)
+
+**Basic Staterooms (Entry-Level with Balcony)**
 - **Deluxe Porthole View with Veranda** - Entry-level with balcony, central location
 - **Edge Stateroom with Infinite Veranda (Partial View)** - Budget Infinite Veranda
 - **Edge Stateroom with Infinite Veranda** - Standard Infinite Veranda

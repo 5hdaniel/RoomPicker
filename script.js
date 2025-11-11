@@ -402,6 +402,108 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             price: '$$$$$',
             bestFor: 'families or groups wanting spacious two-bedroom luxury with hot tub and full Retreat'
+        },
+        inside: {
+            name: 'Inside Stateroom',
+            icon: '🚪',
+            description: 'Most affordable option - cozy stateroom with no windows. Perfect for budget travelers who spend most time exploring the ship.',
+            highlights: [
+                '~181 sq ft - no windows',
+                'Sleeps up to 2 guests',
+                'Most budget-friendly option',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Plentiful storage space',
+                'In-room Automation',
+                'Perfect for those prioritizing savings'
+            ],
+            price: '$',
+            bestFor: 'extreme budget travelers who plan to spend minimal time in their room'
+        },
+        deluxeInside: {
+            name: 'Deluxe Inside Stateroom',
+            icon: '🛏️',
+            description: 'Larger inside stateroom with more space but no windows. Better value for budget travelers wanting extra room.',
+            highlights: [
+                '~202-231 sq ft - no windows',
+                'Sleeps up to 2 guests',
+                '20% more space than standard inside',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Extra storage and living space',
+                'In-room Automation',
+                'Great budget option with more comfort'
+            ],
+            price: '$',
+            bestFor: 'budget travelers wanting more space without paying for ocean views'
+        },
+        oceanView: {
+            name: 'Ocean View',
+            icon: '🪟',
+            description: 'Budget-friendly stateroom on Deck 3 with large picture window. No balcony but great value for ocean views.',
+            highlights: [
+                '~200 sq ft with large window',
+                'Deck 3 location',
+                'No balcony but natural light and views',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Plentiful storage space',
+                'In-room Automation',
+                'Affordable ocean view option'
+            ],
+            price: '$',
+            bestFor: 'budget travelers wanting natural light and ocean views without balcony cost'
+        },
+        primeOceanView: {
+            name: 'Prime Ocean View Stateroom',
+            icon: '🌊',
+            description: 'Ocean view stateroom with better midship or higher deck location. No balcony but improved positioning for less motion.',
+            highlights: [
+                '~200 sq ft with large window',
+                'Midship or higher deck location',
+                'Better location for stability',
+                'Natural light and ocean views',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Plentiful storage space',
+                'In-room Automation'
+            ],
+            price: '$',
+            bestFor: 'budget travelers wanting better location with ocean views but no balcony'
+        },
+        deluxeOceanView: {
+            name: 'Deluxe Ocean View',
+            icon: '🌅',
+            description: 'Spacious ocean view with large forward-facing window and central location. No balcony but much more space than standard.',
+            highlights: [
+                '~238-348 sq ft with large forward window',
+                'Central ship location',
+                'Up to 70% more space than standard',
+                'Forward-facing panoramic views',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Extra living and storage space',
+                'In-room Automation'
+            ],
+            price: '$$',
+            bestFor: 'travelers wanting spacious room with views but willing to skip balcony for value'
+        },
+        panoramicOceanView: {
+            name: 'Panoramic Ocean View',
+            icon: '🖼️',
+            description: 'Floor-to-ceiling glass window offering dramatic ocean views. No balcony but stunning panoramic vistas from inside.',
+            highlights: [
+                '~212 sq ft with floor-to-ceiling glass',
+                'Panoramic ocean views',
+                'Natural light floods the room',
+                'Modern design with expansive windows',
+                'King sized Cashmere Mattress',
+                'Premium bathroom products',
+                'Plentiful storage space',
+                'In-room Automation'
+            ],
+            price: '$',
+            bestFor: 'travelers wanting dramatic floor-to-ceiling views without paying for balcony access'
         }
     };
 
@@ -467,6 +569,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Scoring algorithm to determine best room match
         const roomScores = {
+            inside: 0,
+            deluxeInside: 0,
+            oceanView: 0,
+            primeOceanView: 0,
+            deluxeOceanView: 0,
+            panoramicOceanView: 0,
             deluxePorthole: 0,
             edgeInfinitePartial: 0,
             edgeInfinite: 0,
@@ -487,7 +595,29 @@ document.addEventListener('DOMContentLoaded', () => {
             penthouse: 0
         };
 
-        // Basic Staterooms scoring (most budget-friendly)
+        // Inside Staterooms scoring (most budget-friendly - no windows)
+        roomScores.inside += scores.value * 5; // Highest value score
+        roomScores.inside += scores.couple * 1;
+
+        roomScores.deluxeInside += scores.value * 4.5;
+        roomScores.deluxeInside += scores.space * 1;
+        roomScores.deluxeInside += scores.couple * 1;
+
+        // Ocean View Staterooms scoring (budget-friendly with windows - no balcony)
+        roomScores.oceanView += scores.value * 4.5;
+        roomScores.oceanView += scores.couple * 1.5;
+
+        roomScores.primeOceanView += scores.value * 4;
+        roomScores.primeOceanView += scores.couple * 1.5;
+
+        roomScores.deluxeOceanView += scores.value * 3.5;
+        roomScores.deluxeOceanView += scores.space * 1.5;
+        roomScores.deluxeOceanView += scores.couple * 1.5;
+
+        roomScores.panoramicOceanView += scores.value * 4;
+        roomScores.panoramicOceanView += scores.couple * 2;
+
+        // Basic Staterooms scoring (entry-level with balcony)
         roomScores.deluxePorthole += scores.value * 4;
         roomScores.deluxePorthole += scores.couple * 1;
 
