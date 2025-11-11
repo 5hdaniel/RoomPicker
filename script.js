@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plentiful storage space',
                 'In-room Automation'
             ],
-            price: '$',
+            price: 'Starting from $2,268/person',
             bestFor: 'budget travelers wanting veranda access in central location'
         },
         edgeInfinitePartial: {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plush bathrobes and towels',
                 'Budget-friendly option'
             ],
-            price: '$',
+            price: 'Starting from $2,408/person',
             bestFor: 'value seekers wanting Infinite Veranda without paying premium for location'
         },
         edgeInfinite: {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plush bathrobes and towels',
                 'Great standard option'
             ],
-            price: '$$',
+            price: 'Starting from $2,428/person',
             bestFor: 'travelers wanting Infinite Veranda experience at standard pricing'
         },
         primeEdgeInfinite: {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'King sized Cashmere Mattress',
                 'Premium location at great value'
             ],
-            price: '$$',
+            price: 'Starting from $2,478/person',
             bestFor: 'travelers wanting best location without concierge or suite upgrade'
         },
         sunsetVeranda: {
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plush bathrobes and towels',
                 'Extra space without suite pricing'
             ],
-            price: '$$',
+            price: 'Starting from $3,068/person',
             bestFor: 'travelers wanting extra space and sunset views at standard pricing'
         },
         aquaclass: {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Eco-friendly products',
                 'Great value for spa lovers'
             ],
-            price: '$$',
+            price: 'Starting from $3,080/person',
             bestFor: 'couples who prioritize wellness and spa experiences without suite pricing'
         },
         primeAquaclass: {
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'SEA Thermal Suite access',
                 'Best location for less motion'
             ],
-            price: '$$$',
+            price: 'Starting from $3,380/person',
             bestFor: 'wellness enthusiasts who want the best location and views'
         },
         aquaSky: {
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Traditional veranda with lounge seating',
                 'SEA Thermal Suite with in-room fitness'
             ],
-            price: '$$$$',
+            price: 'Starting from $5,968/person',
             bestFor: 'wellness lovers who want the complete luxury suite experience'
         },
         magicCarpet: {
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Priority check-in and embarkation',
                 'Reserved theater seating'
             ],
-            price: '$$$$',
+            price: 'Starting from $4,668/person',
             bestFor: 'couples wanting a unique Retreat experience with spectacular Magic Carpet views'
         },
         skySuite: {
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Up to 4 guests',
                 'Afternoon tea events'
             ],
-            price: '$$$$',
+            price: 'Starting from $5,018/person',
             bestFor: 'families or couples wanting high-deck views with Retreat privileges'
         },
         sunsetSky: {
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Reserved theater seating',
                 'Afternoon tea events'
             ],
-            price: '$$$$',
+            price: 'Starting from $5,568/person',
             bestFor: 'sunset lovers and couples seeking romantic aft-facing views with luxury'
         },
         celebrity: {
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Minibar included',
                 'Up to 4 guests'
             ],
-            price: '$$$$',
+            price: 'Starting from $8,568/person',
             bestFor: 'couples or families wanting spacious luxury without wellness focus'
         },
         royal: {
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Daily bar refresh',
                 'Full Retreat VIP treatment'
             ],
-            price: '$$$$$',
+            price: 'Starting from $13,768/person',
             bestFor: 'travelers seeking the ultimate VIP experience with maximum space and luxury'
         },
         iconic: {
@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Complimentary beach towel, shoeshine, umbrella services',
                 'Welcome bottle of bubbles'
             ],
-            price: '$$$$$$',
+            price: 'Starting from $28,768/person',
             bestFor: 'those seeking the absolute ultimate luxury experience - the crown jewel of Celebrity Cruises (Hi Andy! 👋)'
         },
         conciergePartial: {
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plush bathrobes, slippers',
                 'Daily delivery of delectable delights'
             ],
-            price: '$$',
+            price: 'Starting from $2,670/person',
             bestFor: 'budget-conscious travelers wanting concierge perks without paying full concierge price'
         },
         concierge: {
@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Daily delivery of delectable delights',
                 'Plush bathrobes and slippers'
             ],
-            price: '$$$',
+            price: 'Starting from $2,690/person',
             bestFor: 'travelers wanting premium service and amenities at a mid-range price'
         },
         primeConcierge: {
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Premium bathroom products',
                 'Daily delivery of delectable delights'
             ],
-            price: '$$$',
+            price: 'Starting from $2,740/person',
             bestFor: 'travelers wanting concierge service with the best midship location'
         },
         edgeVilla: {
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Full Retreat privileges',
                 'Up to 4 guests'
             ],
-            price: '$$$$$',
+            price: 'Starting from $15,268/person',
             bestFor: 'travelers seeking unique two-story living with private plunge pool and direct sundeck access'
         },
         penthouse: {
@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'SEA Thermal Suite access',
                 'Full Retreat privileges'
             ],
-            price: '$$$$$',
+            price: 'Starting from $18,768/person',
             bestFor: 'families or groups wanting spacious two-bedroom luxury with hot tub and full Retreat'
         },
         inside: {
@@ -417,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'In-room Automation',
                 'Perfect for those prioritizing savings'
             ],
-            price: '$',
+            price: 'Starting from $1,388/person',
             bestFor: 'extreme budget travelers who plan to spend minimal time in their room'
         },
         deluxeInside: {
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'In-room Automation',
                 'Great budget option with more comfort'
             ],
-            price: '$',
+            price: 'Starting from $1,438/person',
             bestFor: 'budget travelers wanting more space without paying for ocean views'
         },
         oceanView: {
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'In-room Automation',
                 'Affordable ocean view option'
             ],
-            price: '$',
+            price: 'Starting from $1,668/person',
             bestFor: 'budget travelers wanting natural light and ocean views without balcony cost'
         },
         primeOceanView: {
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plentiful storage space',
                 'In-room Automation'
             ],
-            price: '$',
+            price: 'Starting from $1,768/person',
             bestFor: 'budget travelers wanting better location with ocean views but no balcony'
         },
         deluxeOceanView: {
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Extra living and storage space',
                 'In-room Automation'
             ],
-            price: '$$',
+            price: 'Starting from $1,968/person',
             bestFor: 'travelers wanting spacious room with views but willing to skip balcony for value'
         },
         panoramicOceanView: {
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Plentiful storage space',
                 'In-room Automation'
             ],
-            price: '$',
+            price: 'Starting from $2,168/person',
             bestFor: 'travelers wanting dramatic floor-to-ceiling views without paying for balcony access'
         }
     };
