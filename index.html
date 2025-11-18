@@ -41,8 +41,117 @@
             <div id="quiz-container" class="quiz-container">
                 <button id="back-btn" class="back-btn hidden">← Back</button>
 
-                <!-- Question 1 -->
+                <!-- Step 1: Booking Status -->
                 <div class="question active" data-question="1">
+                    <h3>Have you already booked your cruise?</h3>
+                    <div class="options">
+                        <button class="option" data-action="set-booking-status" data-value="booked" data-points="{}">Yes, I'm already booked</button>
+                        <button class="option" data-action="set-booking-status" data-value="not-booked" data-points="{}">Not yet – I'm still planning</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 (Booked Path) -->
+                <div class="question" data-question="2" data-path="booked">
+                    <h3>Tell us about your sailing</h3>
+                    <div class="form-grid">
+                        <label>
+                            Cruise line
+                            <select id="booked-cruise-line">
+                                <option value="">Select a cruise line</option>
+                                <option value="Celebrity Cruises">Celebrity Cruises</option>
+                                <option value="Royal Caribbean">Royal Caribbean</option>
+                                <option value="Norwegian Cruise Line">Norwegian Cruise Line</option>
+                                <option value="Princess Cruises">Princess Cruises</option>
+                                <option value="Virgin Voyages">Virgin Voyages</option>
+                            </select>
+                        </label>
+                        <label>
+                            Destination / itinerary
+                            <input type="text" id="booked-destination" placeholder="e.g., Western Caribbean" />
+                        </label>
+                        <label>
+                            Sail date (start)
+                            <input type="date" id="booked-start-date" />
+                        </label>
+                        <label>
+                            Sail date (end)
+                            <input type="date" id="booked-end-date" />
+                        </label>
+                    </div>
+                    <p id="ship-detection-result" class="ship-detection">Provide details to auto-detect your ship.</p>
+                    <div class="options">
+                        <button class="option" data-action="save-booked-info" data-points="{}">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 (Planning Path) -->
+                <div class="question" data-question="3" data-path="not-booked">
+                    <h3>Where and when do you want to sail?</h3>
+                    <div class="form-grid">
+                        <label>
+                            Dream destination
+                            <input type="text" id="intended-destination" placeholder="e.g., Greek Isles" />
+                        </label>
+                        <label>
+                            Target month & year
+                            <input type="month" id="intended-month" />
+                        </label>
+                    </div>
+                    <div class="options">
+                        <button class="option" data-action="save-intended-trip" data-points="{}">Continue</button>
+                    </div>
+                </div>
+
+                <div class="question" data-question="4" data-path="not-booked">
+                    <h3>How many cruises have you sailed before?</h3>
+                    <div class="form-grid">
+                        <label>
+                            Cruise count
+                            <input type="number" id="cruise-history-count" min="0" placeholder="e.g., 3" />
+                        </label>
+                    </div>
+                    <div class="options">
+                        <button class="option" data-action="save-history" data-points="{}">Continue</button>
+                    </div>
+                </div>
+
+                <div class="question" data-question="5" data-path="not-booked">
+                    <h3>Which cruise lines have you enjoyed before?</h3>
+                    <div class="checkbox-grid">
+                        <label><input type="checkbox" name="prior-lines" value="Celebrity Cruises" /> Celebrity Cruises</label>
+                        <label><input type="checkbox" name="prior-lines" value="Royal Caribbean" /> Royal Caribbean</label>
+                        <label><input type="checkbox" name="prior-lines" value="Norwegian Cruise Line" /> Norwegian Cruise Line</label>
+                        <label><input type="checkbox" name="prior-lines" value="Princess Cruises" /> Princess Cruises</label>
+                        <label><input type="checkbox" name="prior-lines" value="Disney Cruise Line" /> Disney Cruise Line</label>
+                        <label><input type="checkbox" name="prior-lines" value="Virgin Voyages" /> Virgin Voyages</label>
+                    </div>
+                    <div class="options">
+                        <button class="option" data-action="save-prior-lines" data-points="{}">Continue</button>
+                    </div>
+                </div>
+
+                <div class="question" data-question="6" data-path="not-booked">
+                    <h3>What's your planning budget (per person)?</h3>
+                    <div class="form-grid">
+                        <label>
+                            Select a range
+                            <select id="planning-budget">
+                                <option value="">Choose a budget</option>
+                                <option value="Under $2,000">Under $2,000</option>
+                                <option value="$2,000 - $3,000">$2,000 - $3,000</option>
+                                <option value="$3,000 - $5,000">$3,000 - $5,000</option>
+                                <option value="$5,000 - $7,500">$5,000 - $7,500</option>
+                                <option value="$7,500+">$7,500+</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="options">
+                        <button class="option" data-action="record-planning-budget" data-points="{}">Continue to preferences</button>
+                    </div>
+                </div>
+
+                <!-- Shared Preference Questions -->
+                <div class="question" data-question="7">
                     <h3>What's most important to you on a cruise?</h3>
                     <div class="options">
                         <button class="option" data-points='{"wellness": 3}'>Wellness & spa experiences</button>
@@ -52,8 +161,7 @@
                     </div>
                 </div>
 
-                <!-- Question 2 -->
-                <div class="question" data-question="2">
+                <div class="question" data-question="8">
                     <h3>How many people are traveling with you?</h3>
                     <div class="options">
                         <button class="option" data-points='{"couple": 2}'>Just me or my partner (2 guests)</button>
@@ -61,8 +169,7 @@
                     </div>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="question" data-question="3">
+                <div class="question" data-question="9">
                     <h3>How important is butler service to you?</h3>
                     <div class="options">
                         <button class="option" data-points='{"luxury": 3}'>Essential - I want full VIP treatment</button>
@@ -71,8 +178,7 @@
                     </div>
                 </div>
 
-                <!-- Question 4 -->
-                <div class="question" data-question="4">
+                <div class="question" data-question="10">
                     <h3>Which amenities appeal to you most?</h3>
                     <div class="options">
                         <button class="option" data-points='{"wellness": 3}'>Thermal suite, yoga mats, spa products</button>
@@ -82,8 +188,7 @@
                     </div>
                 </div>
 
-                <!-- Question 5 -->
-                <div class="question" data-question="5">
+                <div class="question" data-question="11">
                     <h3>What's your budget preference?</h3>
                     <div class="options">
                         <button class="option" data-points='{"value": 3}'>Budget-friendly with good perks</button>
@@ -93,23 +198,13 @@
                     </div>
                 </div>
 
-                <!-- Question 6 -->
-                <div class="question" data-question="6">
+                <div class="question" data-question="12">
                     <h3>How important is exclusive dining access?</h3>
                     <div class="options">
                         <button class="option" data-points='{"wellness": 2}'>I want Blu (AquaClass restaurant)</button>
                         <button class="option" data-points='{"luxury": 2}'>I want Luminae and The Retreat</button>
                         <button class="option" data-points='{"luxury": 3}'>Unlimited specialty dining package</button>
                         <button class="option" data-points='{"value": 1}'>Main dining room is fine</button>
-                    </div>
-                </div>
-
-                <!-- Question 7 -->
-                <div class="question" data-question="7">
-                    <h3>One last question... Is your name Andy?</h3>
-                    <div class="options">
-                        <button class="option" data-points='{"andy": 1}'>Yes, I'm Andy!</button>
-                        <button class="option" data-points='{"notandy": 1}'>No, my name is not Andy</button>
                     </div>
                 </div>
             </div>
