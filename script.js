@@ -979,9 +979,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const authModalConfirm = document.getElementById('auth-modal-confirm');
     const authModalClose = document.getElementById('auth-modal-close');
     const authModalLoginLink = document.getElementById('auth-modal-login-link');
+    const viewRoomDetailsBtn = document.getElementById('view-room-details');
+    const comparisonSection = document.getElementById('compare');
+    const comparisonTabs = document.querySelectorAll('.comparison-tab');
+    const comparisonPanelsWrapper = document.querySelector('.comparison-panels');
+    const comparisonPanels = document.querySelectorAll('.comparison-panel');
+    const comparisonModeToggle = document.querySelector('.comparison-mode-toggle');
+    const comparisonModeButtons = comparisonModeToggle ? comparisonModeToggle.querySelectorAll('[data-mode]') : [];
+    const comparisonDigest = document.getElementById('comparison-digest');
+    const roomDirectoryContainers = document.querySelectorAll('[data-room-directory]');
+    const digestCtas = document.querySelectorAll('.digest-cta');
 
     let isAuthenticated = false;
     let pendingAuthMode = 'login';
+    let activeComparisonCatalog = 'celebrityEdge';
+    let lastRecommendationMeta = null;
+    let roomRowHighlightTimeout = null;
+    let comparisonViewMode = 'matrix';
 
     function getActiveCatalogKey() {
         const bookedLine = userTripDetails.bookedCruiseLine;
@@ -1022,6 +1036,171 @@ document.addEventListener('DOMContentLoaded', () => {
             catalogKey: defaultCatalogKey,
             resolvedKey: baseKey
         };
+    }
+
+    function setupComparisonTabs() {
+        if (!comparisonTabs.length) return;
+
+        comparisonTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetCatalog = tab.dataset.catalog;
+                activateComparisonTab(targetCatalog);
+            });
+        });
+
+        activateComparisonTab(activeComparisonCatalog);
+    }
+
+    function setupComparisonViewControls() {
+        if (comparisonModeButtons.length) {
+            comparisonModeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetMode = button.dataset.mode || 'digest';
+                    setComparisonViewMode(targetMode);
+                });
+            });
+        }
+
+        if (digestCtas.length) {
+            digestCtas.forEach(cta => {
+                cta.addEventListener('click', () => {
+                    setComparisonViewMode('matrix', { skipScroll: true });
+                    const targetCatalog = cta.dataset.targetCatalog;
+                    if (targetCatalog) {
+                        activateComparisonTab(targetCatalog);
+                    }
+                    if (comparisonSection) {
+                        comparisonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        setComparisonViewMode('digest', { skipScroll: true });
+    }
+
+    function activateComparisonTab(catalogKey = defaultCatalogKey) {
+        if (!catalogKey) return;
+        activeComparisonCatalog = catalogKey;
+
+        comparisonTabs.forEach(tab => {
+            const isActive = tab.dataset.catalog === catalogKey;
+            tab.classList.toggle('active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            tab.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        comparisonPanels.forEach(panel => {
+            const isActive = panel.dataset.catalog === catalogKey;
+            panel.classList.toggle('active', isActive);
+            panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        });
+    }
+
+    function setComparisonViewMode(mode = 'digest', options = {}) {
+        if (!comparisonPanelsWrapper || !comparisonDigest) return;
+        const safeMode = mode === 'matrix' ? 'matrix' : 'digest';
+        const { skipScroll = true } = options;
+        comparisonViewMode = safeMode;
+
+        const showDigest = safeMode === 'digest';
+        comparisonDigest.classList.toggle('hidden', !showDigest);
+        comparisonPanelsWrapper.classList.toggle('hidden', showDigest);
+
+        if (comparisonModeButtons.length) {
+            comparisonModeButtons.forEach(button => {
+                const isActive = button.dataset.mode === safeMode;
+                button.classList.toggle('active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+        }
+
+        if (!skipScroll && comparisonSection) {
+            comparisonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function populateRoomDirectories() {
+        if (!roomDirectoryContainers.length) return;
+
+        roomDirectoryContainers.forEach(container => {
+            const catalogKey = container.dataset.catalog;
+            const catalog = roomCatalogs[catalogKey];
+            if (!catalog) {
+                container.innerHTML = '<p class="room-directory-loading">Room data unavailable.</p>';
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            Object.entries(catalog.rooms).forEach(([roomKey, room]) => {
+                const row = document.createElement('article');
+                row.className = 'room-row';
+                row.dataset.roomKey = roomKey;
+
+                const primaryHighlight = Array.isArray(room.highlights) ? room.highlights[0] : '';
+                row.innerHTML = `
+                    <div class="room-row__title">
+                        <span class="room-row__icon">${room.icon || '🛏️'}</span>
+                        <div>
+                            <h4>${room.name}</h4>
+                            <p>${room.bestFor || ''}</p>
+                        </div>
+                    </div>
+                    <div class="room-row__meta">
+                        ${room.price ? `<span class="room-row__price">${room.price}</span>` : ''}
+                        ${primaryHighlight ? `<span class="room-row__detail">${primaryHighlight}</span>` : ''}
+                    </div>
+                `;
+
+                fragment.appendChild(row);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(fragment);
+        });
+    }
+
+    function handleViewRoomDetails() {
+        if (!lastRecommendationMeta) {
+            if (comparisonSection) {
+                setComparisonViewMode('matrix', { skipScroll: true });
+                comparisonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            return;
+        }
+
+        const { catalogKey, resolvedKey } = lastRecommendationMeta;
+        setComparisonViewMode('matrix', { skipScroll: true });
+        activateComparisonTab(catalogKey);
+        if (comparisonSection) {
+            comparisonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        requestAnimationFrame(() => {
+            highlightRoomRow(catalogKey, resolvedKey);
+        });
+    }
+
+    function highlightRoomRow(catalogKey, roomKey) {
+        if (!catalogKey || !roomKey) return;
+        const activePanel = Array.from(comparisonPanels).find(panel => panel.dataset.catalog === catalogKey);
+        if (!activePanel) return;
+
+        const rows = activePanel.querySelectorAll('.room-row');
+        rows.forEach(row => row.classList.remove('room-row--highlight'));
+
+        const targetRow = activePanel.querySelector(`.room-row[data-room-key="${roomKey}"]`);
+        if (!targetRow) return;
+
+        targetRow.classList.add('room-row--highlight');
+        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        if (roomRowHighlightTimeout) {
+            clearTimeout(roomRowHighlightTimeout);
+        }
+        roomRowHighlightTimeout = setTimeout(() => {
+            targetRow.classList.remove('room-row--highlight');
+        }, 4000);
     }
 
     function setupCollaborationCtas() {
@@ -1196,6 +1375,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateVisibleQuestions();
         showQuestion(0);
         setupShipDetection();
+        setupComparisonTabs();
+        setupComparisonViewControls();
+        populateRoomDirectories();
+        if (viewRoomDetailsBtn) {
+            viewRoomDetailsBtn.addEventListener('click', handleViewRoomDetails);
+        }
 
         // Hide back button on first question
         updateBackButton();
@@ -1673,7 +1858,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calculate best room
         const bestRoomKey = calculateBestRoom();
-        const { room: bestRoom, catalogKey } = getRoomRecommendation(bestRoomKey);
+        const { room: bestRoom, catalogKey, resolvedKey } = getRoomRecommendation(bestRoomKey);
         const catalogMeta = roomCatalogs[catalogKey] || roomCatalogs[defaultCatalogKey];
         const brandAccent = catalogKey === 'royalIcon' ? 'rgba(0, 174, 239, 0.2)' : 'rgba(255, 255, 255, 0.15)';
         const brandBanner = catalogMeta ? `
@@ -1738,6 +1923,11 @@ document.addEventListener('DOMContentLoaded', () => {
         resultContent.innerHTML = resultHTML;
         updateShareTools(bestRoomKey);
         quizResult.classList.remove('hidden');
+        lastRecommendationMeta = { catalogKey, resolvedKey };
+        if (viewRoomDetailsBtn) {
+            viewRoomDetailsBtn.textContent = `See ${bestRoom.name} in the comparison table`;
+            viewRoomDetailsBtn.classList.remove('hidden');
+        }
 
         // Special fireworks animation for Iconic Suite!
         if (bestRoomKey === 'iconic') {
@@ -1889,6 +2079,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hide results
         quizResult.classList.add('hidden');
         quizResult.classList.remove('iconic-result');
+        lastRecommendationMeta = null;
+        if (viewRoomDetailsBtn) {
+            viewRoomDetailsBtn.classList.add('hidden');
+        }
 
         // Clean up fireworks if they exist
         const fireworksContainer = document.querySelector('.fireworks-container');

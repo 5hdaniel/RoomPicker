@@ -209,16 +209,21 @@
                 </div>
             </div>
 
-            <div id="quiz-result" class="quiz-result hidden">
-                <h3>Your Perfect Match:</h3>
-                <div id="result-content"></div>
-                <p class="comparison-message">
-                    Planning with friends or family? Encourage everyone to compare picks and lock in the room that makes the most sense for the whole crew.
-                </p>
-                <div class="result-actions">
-                    <div class="auth-cta" id="result-auth-cta">
-                        <h4>Save & compare with your travel party</h4>
-                        <p>Log in or create a free Room Picker profile to unlock sharing tools and keep tabs on everyone’s favorites.</p>
+                <div id="quiz-result" class="quiz-result hidden">
+                    <h3>Your Perfect Match:</h3>
+                    <div id="result-content"></div>
+                    <div class="result-actions">
+                        <button id="view-room-details" class="secondary-btn hidden" type="button">
+                            Jump to this room in the comparison table
+                        </button>
+                    </div>
+                    <p class="comparison-message">
+                        Planning with friends or family? Encourage everyone to compare picks and lock in the room that makes the most sense for the whole crew.
+                    </p>
+                    <div class="result-actions">
+                        <div class="auth-cta" id="result-auth-cta">
+                            <h4>Save & compare with your travel party</h4>
+                            <p>Log in or create a free Room Picker profile to unlock sharing tools and keep tabs on everyone’s favorites.</p>
                         <div class="cta-buttons">
                             <button id="login-btn" class="outline-btn" type="button">Log In</button>
                             <button id="signup-btn" class="primary-btn" type="button">Sign Up Free</button>
@@ -255,10 +260,77 @@
     <section id="compare" class="comparison-section">
         <div class="container">
             <h2>📊 Full Room Comparison</h2>
-            <p class="section-intro">Compare all Celebrity Edge-Class accommodations side by side</p>
+            <p class="section-intro">Compare Celebrity Edge-Class and Royal Caribbean Icon-class accommodations side by side</p>
 
-            <div class="table-wrapper">
-                <table class="comparison-table">
+            <div class="comparison-density">
+                <div class="comparison-mode-toggle" role="group" aria-label="Comparison view options">
+                    <span class="toggle-label">Viewing mode:</span>
+                    <button type="button" class="mode-btn active" data-mode="digest" aria-pressed="true">Digest</button>
+                    <button type="button" class="mode-btn" data-mode="matrix" aria-pressed="false">Full matrix</button>
+                </div>
+                <p class="toggle-hint">Start with a quick digest to reduce overwhelm, then open the full tables when you need every detail.</p>
+            </div>
+
+            <div id="comparison-digest" class="comparison-digest">
+                <article class="digest-card" aria-label="Celebrity Edge-Class wellness picks">
+                    <p class="digest-eyebrow">Celebrity Edge-Class</p>
+                    <h3>Wellness & serene design</h3>
+                    <ul>
+                        <li><strong>AquaClass</strong> gets you Blu dining plus SEA Thermal Suite access without suite pricing.</li>
+                        <li><strong>Prime Edge Infinite</strong> balances Infinite Veranda tech with the most stable midship location.</li>
+                        <li><strong>Aqua Sky Suites</strong> layer in Retreat butler service while keeping the spa-forward lifestyle.</li>
+                    </ul>
+                    <button type="button" class="digest-cta" data-target-catalog="celebrityEdge">Browse Celebrity rooms</button>
+                </article>
+
+                <article class="digest-card" aria-label="Celebrity Edge-Class luxury picks">
+                    <p class="digest-eyebrow">Celebrity Retreat</p>
+                    <h3>Entertaining & indulgence</h3>
+                    <ul>
+                        <li><strong>Sky & Sunset Suites</strong> add Luminae dining plus priority everything for couples.</li>
+                        <li><strong>Edge Villas</strong> give two-story layouts with private plunge pools for wow-factor hosting.</li>
+                        <li><strong>Royal Suites</strong> unlock unlimited specialty dining, premium drinks, and laundry perks.</li>
+                    </ul>
+                    <button type="button" class="digest-cta" data-target-catalog="celebrityEdge">Compare Retreat suites</button>
+                </article>
+
+                <article class="digest-card" aria-label="Royal Caribbean Icon-Class family picks">
+                    <p class="digest-eyebrow">Royal Caribbean Icon-Class</p>
+                    <h3>Families & high energy</h3>
+                    <ul>
+                        <li><strong>Surfside Family Suites</strong> overlook the kid-focused neighborhood with bunk alcoves.</li>
+                        <li><strong>Infinite Ocean View Balconies</strong> double as sun decks without losing indoor space.</li>
+                        <li><strong>Sunset Junior Suites</strong> add aft views, Coastal Kitchen, and suite host attention.</li>
+                    </ul>
+                    <button type="button" class="digest-cta" data-target-catalog="royalIcon">See Icon-class rooms</button>
+                </article>
+
+                <article class="digest-card" aria-label="Royal Caribbean Icon-Class suite picks">
+                    <p class="digest-eyebrow">Royal Suite Class</p>
+                    <h3>Ultimate showstoppers</h3>
+                    <ul>
+                        <li><strong>Surfside Townhouses</strong> span three decks with slide entrances for kids.</li>
+                        <li><strong>Icon & Royal Loft Suites</strong> add Royal Genie service, two-story glass, and private whirlpools.</li>
+                        <li><strong>Thermal Suite Balconies</strong> keep spa time included even if you skip the top suites.</li>
+                    </ul>
+                    <button type="button" class="digest-cta" data-target-catalog="royalIcon">Dive into suite details</button>
+                </article>
+            </div>
+
+            <div class="comparison-tabs" role="tablist">
+                <button class="comparison-tab active" role="tab" aria-selected="true" data-catalog="celebrityEdge">
+                    Celebrity Edge-Class
+                </button>
+                <button class="comparison-tab" role="tab" aria-selected="false" data-catalog="royalIcon">
+                    Royal Caribbean Icon-Class
+                </button>
+            </div>
+
+            <div class="comparison-panels">
+                <div class="comparison-panel active" role="tabpanel" data-catalog="celebrityEdge">
+                    <h3 class="panel-heading">Celebrity Edge-Class Room Matrix</h3>
+                    <div class="table-wrapper">
+                        <table class="comparison-table">
                     <thead>
                         <tr>
                             <th>Feature</th>
@@ -604,7 +676,75 @@
                             <td>Travelers seeking full luxury, privacy & space</td>
                         </tr>
                     </tbody>
-                </table>
+                        </table>
+                    </div>
+                    <div class="room-directory" data-room-directory data-catalog="celebrityEdge">
+                        <p class="room-directory-loading">Loading room directory…</p>
+                    </div>
+                </div>
+
+                <div class="comparison-panel" role="tabpanel" aria-hidden="true" data-catalog="royalIcon">
+                    <h3 class="panel-heading">Royal Caribbean Icon-Class Highlights</h3>
+                    <div class="table-wrapper">
+                        <table class="comparison-table royal-table">
+                            <thead>
+                                <tr>
+                                    <th>Room Type</th>
+                                    <th>Approx. Size</th>
+                                    <th>Guests</th>
+                                    <th>Signature Perk</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Icon Ocean View Balcony</td>
+                                    <td>~270 sq ft</td>
+                                    <td>Up to 4</td>
+                                    <td>Neighborhood-facing balcony with ocean breezes</td>
+                                </tr>
+                                <tr>
+                                    <td>Infinite Ocean View Balcony</td>
+                                    <td>~300 sq ft</td>
+                                    <td>Up to 4</td>
+                                    <td>Full-height glass transforms from window to sun deck</td>
+                                </tr>
+                                <tr>
+                                    <td>Thermal Suite Balcony</td>
+                                    <td>~280 sq ft</td>
+                                    <td>Up to 2</td>
+                                    <td>Includes Vitality Spa thermal suite passes for two</td>
+                                </tr>
+                                <tr>
+                                    <td>Surfside Family Suite</td>
+                                    <td>~425 sq ft</td>
+                                    <td>Up to 5</td>
+                                    <td>Kids alcove plus Surfside-facing balcony</td>
+                                </tr>
+                                <tr>
+                                    <td>Sunset Junior Suite</td>
+                                    <td>~322 sq ft</td>
+                                    <td>Up to 4</td>
+                                    <td>Aft-facing wrap balcony with Coastal Kitchen access</td>
+                                </tr>
+                                <tr>
+                                    <td>Grand Suite</td>
+                                    <td>~431 sq ft</td>
+                                    <td>Up to 4</td>
+                                    <td>Dedicated bedroom plus Royal Suite Class host</td>
+                                </tr>
+                                <tr>
+                                    <td>Royal Loft Suite</td>
+                                    <td>~2,090 sq ft</td>
+                                    <td>Up to 6</td>
+                                    <td>Two-story glass walls, Royal Genie service, and private whirlpool</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="room-directory" data-room-directory data-catalog="royalIcon">
+                        <p class="room-directory-loading">Loading room directory…</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
