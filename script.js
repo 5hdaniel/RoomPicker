@@ -979,6 +979,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const authModalConfirm = document.getElementById('auth-modal-confirm');
     const authModalClose = document.getElementById('auth-modal-close');
     const authModalLoginLink = document.getElementById('auth-modal-login-link');
+    const demographicInsight = document.getElementById('demographic-insight');
+    const demographicCta = document.getElementById('demographic-cta');
+    const demographicHint = document.getElementById('demographic-hint');
+    const demographicModal = document.getElementById('demographic-modal');
+    const demographicModalClose = document.getElementById('demographic-modal-close');
+    const demographicModalTitle = document.getElementById('demographic-modal-title');
+    const rsvpStep = document.getElementById('rsvp-step');
+    const rsvpForm = document.getElementById('rsvp-form');
+    const rsvpConfirmation = document.getElementById('rsvp-confirmation');
+    const demographicDataPanel = document.getElementById('demographic-data');
     const viewRoomDetailsBtn = document.getElementById('view-room-details');
     const comparisonSection = document.getElementById('compare');
     const comparisonTabs = document.querySelectorAll('.comparison-tab');
@@ -992,10 +1002,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isAuthenticated = false;
     let pendingAuthMode = 'login';
+    let postAuthAction = null;
     let activeComparisonCatalog = 'celebrityEdge';
     let lastRecommendationMeta = null;
     let roomRowHighlightTimeout = null;
     let comparisonViewMode = 'matrix';
+    let hasRsvpd = false;
 
     function getActiveCatalogKey() {
         const bookedLine = userTripDetails.bookedCruiseLine;
@@ -1220,14 +1232,43 @@ document.addEventListener('DOMContentLoaded', () => {
             authModalConfirm.addEventListener('click', completeAuthFlow);
         }
         if (authModalClose) {
-            authModalClose.addEventListener('click', closeAuthModal);
+            authModalClose.addEventListener('click', () => closeAuthModal({ clearPostAction: true }));
         }
         if (authModal) {
             authModal.addEventListener('click', (event) => {
                 if (event.target === authModal) {
-                    closeAuthModal();
+                    closeAuthModal({ clearPostAction: true });
                 }
             });
+        }
+    }
+
+    function setupDemographicAccess() {
+        if (demographicCta) {
+            demographicCta.addEventListener('click', () => {
+                if (!isAuthenticated) {
+                    postAuthAction = 'openDemographics';
+                    handleAuthRequest('login');
+                    return;
+                }
+                openDemographicModal();
+            });
+        }
+
+        if (demographicModalClose) {
+            demographicModalClose.addEventListener('click', closeDemographicModal);
+        }
+
+        if (demographicModal) {
+            demographicModal.addEventListener('click', (event) => {
+                if (event.target === demographicModal) {
+                    closeDemographicModal();
+                }
+            });
+        }
+
+        if (rsvpForm) {
+            rsvpForm.addEventListener('submit', handleRsvpSubmit);
         }
     }
 
@@ -1262,10 +1303,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
-    function closeAuthModal() {
+    function closeAuthModal({ clearPostAction = false } = {}) {
         if (!authModal) return;
         authModal.classList.add('hidden');
         document.body.style.overflow = '';
+        if (clearPostAction) {
+            postAuthAction = null;
+        }
     }
 
     function completeAuthFlow() {
@@ -1277,6 +1321,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 : 'Sharing unlocked! Send your link or invite your crew.';
         }
         closeAuthModal();
+
+        if (postAuthAction === 'openDemographics') {
+            postAuthAction = null;
+            openDemographicModal();
+        }
     }
 
     function copyShareLink() {
@@ -1307,6 +1356,60 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inviteFeedback) {
             inviteFeedback.textContent = 'Copied! Share it with your fellow travelers.';
         }
+    }
+
+    function openDemographicModal() {
+        if (!demographicModal) return;
+        demographicModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        updateDemographicModalView();
+    }
+
+    function closeDemographicModal() {
+        if (!demographicModal) return;
+        demographicModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function updateDemographicModalView() {
+        if (rsvpStep) {
+            rsvpStep.classList.toggle('hidden', hasRsvpd);
+        }
+        if (demographicDataPanel) {
+            demographicDataPanel.classList.toggle('hidden', !hasRsvpd);
+        }
+        if (demographicModalTitle) {
+            demographicModalTitle.textContent = hasRsvpd
+                ? 'Demographic snapshot for your sailing'
+                : 'RSVP to unlock attendee demographics';
+        }
+        if (demographicHint) {
+            demographicHint.textContent = hasRsvpd
+                ? 'Thanks for RSVPing! Preview your attendee mix anytime.'
+                : 'RSVPs are required before we reveal attendee details.';
+        }
+        if (demographicCta) {
+            demographicCta.textContent = hasRsvpd
+                ? 'View demographics'
+                : 'Log in to RSVP & view demographics';
+        }
+        if (demographicInsight) {
+            demographicInsight.classList.toggle('demographic-insight--completed', hasRsvpd);
+        }
+    }
+
+    function handleRsvpSubmit(event) {
+        event.preventDefault();
+        const nameInput = document.getElementById('rsvp-name');
+        const partyInput = document.getElementById('rsvp-party');
+        const name = nameInput ? nameInput.value.trim() : '';
+        const partySize = partyInput ? partyInput.value : '';
+        hasRsvpd = true;
+        if (rsvpConfirmation) {
+            const displayName = name || 'your party';
+            rsvpConfirmation.textContent = `RSVP received for ${displayName} (${partySize || '2'} guests).`;
+        }
+        updateDemographicModalView();
     }
 
     function handleInviteSubmit(event) {
@@ -1371,6 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
         backBtn.addEventListener('click', previousQuestion);
 
         setupCollaborationCtas();
+        setupDemographicAccess();
 
         updateVisibleQuestions();
         showQuestion(0);

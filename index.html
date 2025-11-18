@@ -220,6 +220,15 @@
                     <p class="comparison-message">
                         Planning with friends or family? Encourage everyone to compare picks and lock in the room that makes the most sense for the whole crew.
                     </p>
+                    <div id="demographic-insight" class="demographic-insight" aria-live="polite">
+                        <h4>🍽️ Menu planning follows the guest mix</h4>
+                        <p>
+                            Our chefs fine-tune menus after seeing who RSVP’d—nationalities, cruise history, ages, and family mixes all influence what’s served.
+                            Confirm your spot to unlock a demographic snapshot and understand why your recommendation pairs with certain dining plans.
+                        </p>
+                        <button id="demographic-cta" class="primary-btn" type="button">Log in to RSVP &amp; view demographics</button>
+                        <p id="demographic-hint" class="demographic-hint">RSVPs are required before we reveal attendee details.</p>
+                    </div>
                     <div class="result-actions">
                         <div class="auth-cta" id="result-auth-cta">
                             <h4>Save & compare with your travel party</h4>
@@ -795,6 +804,88 @@
             <div class="auth-modal__actions">
                 <button id="auth-modal-confirm" class="primary-btn" type="button">Continue</button>
                 <a id="auth-modal-login-link" class="auth-modal__link" href="/login">Use classic login page</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="demographic-modal" class="demographic-modal hidden" role="dialog" aria-modal="true" aria-labelledby="demographic-modal-title">
+        <div class="demographic-modal__panel">
+            <button type="button" class="demographic-modal__close" id="demographic-modal-close" aria-label="Close RSVP modal">&times;</button>
+            <p class="demographic-modal__eyebrow">Onboard Dining Intelligence</p>
+            <h3 id="demographic-modal-title">RSVP to unlock attendee demographics</h3>
+            <p class="demographic-modal__intro">We tailor menus to the guest mix. Confirm your attendance so we can show how your sailing is shaping up.</p>
+            <div id="rsvp-step" class="rsvp-step">
+                <form id="rsvp-form" class="rsvp-form">
+                    <label>
+                        Full name
+                        <input type="text" id="rsvp-name" required placeholder="e.g., Jordan Rivera" />
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" id="rsvp-email" required placeholder="you@example.com" />
+                    </label>
+                    <label>
+                        Party size
+                        <input type="number" id="rsvp-party" min="1" max="10" required value="2" />
+                    </label>
+                    <label>
+                        Sailing date
+                        <input type="date" id="rsvp-date" required />
+                    </label>
+                    <button type="submit" class="primary-btn">Submit RSVP</button>
+                    <p id="rsvp-confirmation" class="rsvp-confirmation" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+            <div id="demographic-data" class="demographic-data hidden" aria-live="polite">
+                <h4>Projected attendee mix</h4>
+                <p class="demographic-data__note">Figures refresh automatically as more guests RSVP. Use them to understand why certain dishes appear on your sailing.</p>
+                <div class="demographic-data__grid">
+                    <article>
+                        <h5>Nationality</h5>
+                        <ul>
+                            <li>🇺🇸 United States: 48%</li>
+                            <li>🇨🇦 Canada: 18%</li>
+                            <li>🇬🇧 United Kingdom: 14%</li>
+                            <li>🇲🇽 Mexico &amp; Latin America: 11%</li>
+                            <li>🌍 Other: 9%</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h5>Cruise history</h5>
+                        <ul>
+                            <li>First-time cruisers: 27%</li>
+                            <li>2-4 sailings: 41%</li>
+                            <li>5+ sailings: 32%</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h5>Age bands</h5>
+                        <ul>
+                            <li>18-30: 15%</li>
+                            <li>31-45: 34%</li>
+                            <li>46-60: 29%</li>
+                            <li>61+: 22%</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h5>Family status</h5>
+                        <ul>
+                            <li>Couples: 42%</li>
+                            <li>Families with kids: 38%</li>
+                            <li>Friend groups: 15%</li>
+                            <li>Solo travelers: 5%</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h5>Group size</h5>
+                        <ul>
+                            <li>1-2 guests: 49%</li>
+                            <li>3-4 guests: 33%</li>
+                            <li>5-6 guests: 12%</li>
+                            <li>7+ guests: 6%</li>
+                        </ul>
+                    </article>
+                </div>
             </div>
         </div>
     </div>
