@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let answerHistory = []; // Track answers for back functionality
 
     // Room Definitions
-    const rooms = {
+    const edgeRooms = {
         deluxePorthole: {
             name: 'Deluxe Porthole View with Veranda',
             icon: '🔵',
@@ -520,6 +520,441 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const royalIconRooms = {
+        iconInteriorPlus: {
+            name: 'Interior Plus (Icon Class)',
+            icon: '🧭',
+            description: 'Stylish interior hideaway tucked near Surfside with clever storage and soothing lighting cues.',
+            highlights: [
+                '~187 sq ft interior layout',
+                'Illuminated art wall mimics daylight',
+                'USB-C and wireless charging stations',
+                'Surfside neighborhood access in minutes',
+                'Royal Caribbean signature bedding',
+                'Perfect recharge zone between adventures'
+            ],
+            price: 'Starting from $1,199/person',
+            bestFor: 'value-focused duos that just need a comfy crash pad between thrills'
+        },
+        iconSpaciousInterior: {
+            name: 'Spacious Interior',
+            icon: '🛋️',
+            description: 'Interior room with extra lounge seating and split bathroom design for easy mornings.',
+            highlights: [
+                '~260 sq ft interior footprint',
+                'Split bathroom with separate shower zone',
+                'Sleeps up to 4 with Pullman or sofa bed',
+                'Walk-in closet-inspired storage wall',
+                'Streaming-ready smart TV',
+                'Closest to Chill Island elevators'
+            ],
+            price: 'Starting from $1,349/person',
+            bestFor: 'small crews that want space without paying for windows'
+        },
+        iconOceanView: {
+            name: 'Ocean View Stateroom',
+            icon: '🌊',
+            description: 'Oversized picture window keeps the Caribbean blues in view while you relax indoors.',
+            highlights: [
+                '~258 sq ft with oversized window',
+                'Forward & midship vantage points',
+                'Plush sofa converts for 3rd guest',
+                'Smart storage over the bed',
+                'Spa-inspired shower with glass door',
+                'In-room automation via Royal app'
+            ],
+            price: 'Starting from $1,499/person',
+            bestFor: 'guests who crave natural light but still want sharp value'
+        },
+        iconPanoramicOceanView: {
+            name: 'Panoramic Ocean View',
+            icon: '🪟',
+            description: 'Wrapped-in-glass views from the AquaDome perch, perfect for sunrise coffee sessions.',
+            highlights: [
+                '~260 sq ft with curved floor-to-ceiling glass',
+                'AquaDome neighborhood vantage',
+                'Chaise lounge positioned by the window',
+                'Motorized blackout shades',
+                'Easy access to Overlook pods',
+                'Cinematic wake and bow perspectives'
+            ],
+            price: 'Starting from $1,699/person',
+            bestFor: 'view seekers who prefer climate-controlled comfort over balconies'
+        },
+        iconFamilyOceanView: {
+            name: 'Family Ocean View',
+            icon: '👨‍👩‍👧',
+            description: 'Extra-wide window alcove and Surfside adjacency keep little cruisers happy.',
+            highlights: [
+                '~280 sq ft with family alcove',
+                'Bunk beds kids can call their own',
+                'Split bathroom for smoother routines',
+                'Surfside splash pad right outside',
+                'Royal Caribbean plush bedding',
+                'Sleeps up to 5 guests'
+            ],
+            price: 'Starting from $1,799/person',
+            bestFor: 'families needing daylight plus Surfside convenience'
+        },
+        iconAquadomePanoramic: {
+            name: 'AquaDome Panoramic Suite',
+            icon: '🌅',
+            description: 'Glass-wrapped living room perched inside the AquaDome with 180° ocean drama.',
+            highlights: [
+                '~280 sq ft open concept',
+                'Floor-to-ceiling windows wrapping the bow',
+                'Cozy daybed under the glass',
+                'Preferred seating for AquaDome shows',
+                'Upgraded bathroom amenities',
+                'Perfect sunrise + sunset vantage'
+            ],
+            price: 'Starting from $2,099/person',
+            bestFor: 'travelers who want the wow-factor window wall without stepping outside'
+        },
+        iconSurfsideBalcony: {
+            name: 'Surfside Neighborhood Balcony',
+            icon: '🎠',
+            description: 'Balcony overlooking the playful Surfside carousel and splash zone.',
+            highlights: [
+                '~260 sq ft incl. 55 sq ft balcony',
+                'Direct view of Surfside carousel',
+                'Sliding doors with acoustic glass',
+                'Family-friendly storage',
+                'Perfect for keeping tabs on little adventurers',
+                'Royal Caribbean signature service'
+            ],
+            price: 'Starting from $1,999/person',
+            bestFor: 'families who want balcony time plus Surfside energy'
+        },
+        iconInfiniteCentralParkView: {
+            name: 'Infinite Central Park View Balcony',
+            icon: '🌿',
+            description: 'Innovative drop-down window opens Central Park sights and live music to your space.',
+            highlights: [
+                '~250 sq ft with Infinite balcony tech',
+                'View the lush Central Park neighborhood',
+                'Control fresh air with the touch of a button',
+                'Indoor/outdoor lounge convertible',
+                'Hear live musicians from your retreat',
+                'Closest cabins to specialty dining walkways'
+            ],
+            price: 'Starting from $2,099/person',
+            bestFor: 'travelers intrigued by Icon’s techy Infinite balcony vibe'
+        },
+        iconOceanViewBalcony: {
+            name: 'Ocean View Balcony',
+            icon: '⚓',
+            description: 'Classic balcony facing the open sea with flexible seating and high-deck breeze.',
+            highlights: [
+                '~270 sq ft incl. balcony',
+                'Seating for two outside',
+                'Upgraded sound insulation',
+                'Royal Caribbean app automation',
+                'Choice of Surfside or Chill Island proximity',
+                'King bed converts to twins'
+            ],
+            price: 'Starting from $2,199/person',
+            bestFor: 'guests who want that quintessential balcony breakfast moment'
+        },
+        iconInfiniteOceanViewBalcony: {
+            name: 'Infinite Ocean View Balcony',
+            icon: '🪟',
+            description: 'Edge-like Infinite veranda pointed straight toward the sea for seamless indoor/outdoor living.',
+            highlights: [
+                '~280 sq ft with climate-friendly Infinite design',
+                'Push-button window transforms room into balcony',
+                'Lounge chairs tucked into the frame',
+                'Brilliant for sail-away parties',
+                'Higher deck locations for better vistas',
+                'Split closet keeps things organized'
+            ],
+            price: 'Starting from $2,349/person',
+            bestFor: 'tech-curious cruisers wanting the newest balcony style at sea'
+        },
+        iconSunsetCornerBalcony: {
+            name: 'Sunset Corner Balcony',
+            icon: '🌇',
+            description: 'Aft-corner wrap balcony where the wake view never ends.',
+            highlights: [
+                '~320 sq ft incl. wrap balcony',
+                'Wake-view loungers plus dining set',
+                'Sought-after end-of-hallway privacy',
+                'Perfect for golden-hour photo shoots',
+                'Priority for sunset lovers',
+                'Can connect to adjacent balcony for groups'
+            ],
+            price: 'Starting from $2,749/person',
+            bestFor: 'wake-view fanatics that refuse to miss a sunset'
+        },
+        iconThermalSuiteBalcony: {
+            name: 'Thermal Suite Balcony',
+            icon: '🧖',
+            description: 'Balcony cabin bundled with Vitality Spa thermal suite passes for two.',
+            highlights: [
+                '~280 sq ft with balcony',
+                'Includes weeklong Vitality Spa thermal access',
+                'Proximity to AquaDome serenity zones',
+                'Upgraded bedding and bathrobes',
+                'Spa concierge check-in perks',
+                'Fresh juice delivery each morning'
+            ],
+            price: 'Starting from $2,549/person',
+            bestFor: 'wellness-focused couples who want spa perks without suite pricing'
+        },
+        iconPrimeThermalSuite: {
+            name: 'Prime Thermal Suite Balcony',
+            icon: '💆',
+            description: 'All the Vitality perks plus a calmer midship perch and sweeping views.',
+            highlights: [
+                '~300 sq ft midship balcony',
+                'Thermal suite access + priority treatment booking',
+                'Higher deck + calmer ride',
+                'Expanded sitting area for morning yoga',
+                'Wellness minibar with infused waters',
+                'Dedicated spa concierge text line'
+            ],
+            price: 'Starting from $2,799/person',
+            bestFor: 'yoga mats + ocean breeze kind of guests'
+        },
+        iconSkyJuniorSuite: {
+            name: 'Sky Junior Suite',
+            icon: '☁️',
+            description: 'Junior suite perched near the AquaDome with Retreat-level Coastal Kitchen access.',
+            highlights: [
+                '~322 sq ft + 80 sq ft balcony',
+                'Access to Coastal Kitchen dining',
+                'Larger bathroom with double vanity',
+                'Suite lounge concierge assistance',
+                'Luxury pillow menu + robes',
+                'Sleeps up to 4 guests'
+            ],
+            price: 'Starting from $3,599/person',
+            bestFor: 'wellness-minded cruisers wanting suite perks in a studio footprint'
+        },
+        iconSurfsideFamilySuite: {
+            name: 'Surfside Family Suite',
+            icon: '🏄',
+            description: 'Two sleeping zones plus Surfside balcony let families spread out with endless splash access.',
+            highlights: [
+                '~425 sq ft split layout',
+                'Kids alcove with bunk beds + privacy curtain',
+                'Surfside balcony for people watching',
+                'Royal Suite Class host service',
+                'Access to Surfside Eatery & Pier 7 breakfast',
+                'Sleeps up to 5 comfortably'
+            ],
+            price: 'Starting from $4,099/person',
+            bestFor: 'families that live at Surfside but want suite-level pampering'
+        },
+        iconSunsetJuniorSuite: {
+            name: 'Sunset Junior Suite',
+            icon: '🌠',
+            description: 'Aft-facing junior suite framed by huge windows and panoramic balcony.',
+            highlights: [
+                '~322 sq ft interior + 108 sq ft balcony',
+                'Wraparound glass for endless wake views',
+                'Dedicated seating + dining nook',
+                'Coastal Kitchen access',
+                'Suite-only sun deck privileges',
+                'Perfect romantic hideaway'
+            ],
+            price: 'Starting from $4,499/person',
+            bestFor: 'couples chasing Icon-class wake views with suite perks'
+        },
+        iconPanoramicCornerSuite: {
+            name: 'Panoramic Corner Suite',
+            icon: '🌀',
+            description: 'Corner layout stretches from bow to wake with glass everywhere.',
+            highlights: [
+                '~440 sq ft interior + oversized balcony',
+                'Floor-to-ceiling windows on two sides',
+                'Freestanding soaking tub with a view',
+                'Royal Suite Class host service',
+                'Coastal Kitchen + suite sun deck access',
+                'Priority show and thrill ride reservations'
+            ],
+            price: 'Starting from $5,199/person',
+            bestFor: 'design lovers who want Icon’s sweeping glass corners'
+        },
+        iconGrandSuite: {
+            name: 'Grand Suite',
+            icon: '🏆',
+            description: 'One-bedroom suite with dining table and massive balcony for entertaining.',
+            highlights: [
+                '~431 sq ft + 108 sq ft balcony',
+                'Separate bedroom with privacy door',
+                'Lavish bath with rain shower',
+                'Royal Suite Class host + concierge',
+                'Unlimited VOOM Surf + Stream',
+                'Coastal Kitchen + Suite Sun Deck access'
+            ],
+            price: 'Starting from $6,299/person',
+            bestFor: 'couples or small families wanting dedicated living + dining space'
+        },
+        iconIconLoftSuite: {
+            name: 'Icon Loft Suite',
+            icon: '🪜',
+            description: 'Two-story loft with towering windows overlooking the ocean.',
+            highlights: [
+                '~838 sq ft on two levels',
+                'Double-height glass wall facing the sea',
+                'Upstairs master + downstairs living area',
+                'Royal Genie service',
+                'Unlimited specialty dining + premium drinks',
+                'Sleeps up to 4 guests'
+            ],
+            price: 'Starting from $10,999/person',
+            bestFor: 'suite connoisseurs craving Icon’s lofted wow-factor'
+        },
+        iconNeighborhoodBalconyPartial: {
+            name: 'Central Park Balcony (Partial)',
+            icon: '🌺',
+            description: 'Balcony overlooking Central Park foliage with structural peek-a-boo views.',
+            highlights: [
+                '~270 sq ft incl. balcony',
+                'Living plant walls right outside',
+                'Partial structural view keeps rate low',
+                'Evening live music soundtrack',
+                'Priority for specialty dining reservations',
+                'Perfect compromise between price and perks'
+            ],
+            price: 'Starting from $1,949/person',
+            bestFor: 'value hunters wanting concierge touches with a living-garden backdrop'
+        },
+        iconNeighborhoodBalcony: {
+            name: 'Central Park Balcony',
+            icon: '🎻',
+            description: 'Leafy views, concierge help, and private Central Park ambiance.',
+            highlights: [
+                '~270 sq ft with balcony seating',
+                'Complimentary dining consultation',
+                'Welcome sparkling wine',
+                'Daily tapas delivery',
+                'Priority entertainment reservations',
+                'Closer to Trellis Bar + Chops Grille'
+            ],
+            price: 'Starting from $2,149/person',
+            bestFor: 'travelers who want personal touches without suite rates'
+        },
+        iconNeighborhoodBalconyPrime: {
+            name: 'Central Park Balcony Prime',
+            icon: '🏅',
+            description: 'Best-of-the-best Central Park perch with elevated concierge focus.',
+            highlights: [
+                '~270 sq ft prime midship location',
+                'Personalized pre-cruise planning call',
+                'Higher deck vantage over the park',
+                'Daily petit fours delivery',
+                'Early access to dining + thrill reservations',
+                'Nightly turndown surprises'
+            ],
+            price: 'Starting from $2,299/person',
+            bestFor: 'guests craving concierge access plus lush views and quiet nights'
+        },
+        iconSurfsideTownhouse: {
+            name: 'Surfside Family Townhouse',
+            icon: '🏘️',
+            description: 'Multi-level hideaway with slide to Surfside and private whirlpool.',
+            highlights: [
+                '~700 sq ft over two stories',
+                'Private patio with whirlpool + daybed',
+                'Slide right into Surfside fun',
+                'Royal Genie orchestrates every detail',
+                'Dedicated family media room',
+                'Sleeps up to 6 guests'
+            ],
+            price: 'Starting from $12,499/person',
+            bestFor: 'families wanting the splashiest digs in Surfside'
+        },
+        iconUltimateFamilyTownhouse: {
+            name: 'Ultimate Family Townhouse',
+            icon: '🎢',
+            description: 'Three-level palace with slide, cinema, and backyard dedicated to play.',
+            highlights: [
+                '~1,772 sq ft across three decks',
+                'In-suite cinema + karaoke stage',
+                'Private outdoor space with ping pong + jacuzzi',
+                'Direct Surfside access via white-picket gate',
+                'Royal Genie crafts once-in-a-lifetime moments',
+                'Sleeps up to 8 guests'
+            ],
+            price: 'Starting from $24,999/person',
+            bestFor: 'multi-gen families wanting the most talked-about suite at sea'
+        },
+        iconRoyalLoftSuite: {
+            name: 'Royal Loft Suite',
+            icon: '👑',
+            description: 'Icon’s crown jewel with piano, two levels of glass, and a sprawling terrace.',
+            highlights: [
+                '~2,090 sq ft of indoor/outdoor living',
+                'Two stories with sweeping staircase',
+                'Baby grand piano + bar',
+                'Private whirlpool overlooking the wake',
+                'Royal Genie + Royal Suite Class perks',
+                'Unlimited specialty dining + premium drinks'
+            ],
+            price: 'Starting from $32,999/person',
+            bestFor: 'travelers writing the ultimate Icon-class bucket list story'
+        }
+    };
+
+    const roomCatalogs = {
+        celebrityEdge: {
+            label: 'Celebrity Edge-Class',
+            badgeEmoji: '✨',
+            heroImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+            experienceCopy: 'Edge-class ships deliver resort-chic calm, Infinite Veranda innovation, and The Retreat pampering.',
+            rooms: edgeRooms
+        },
+        royalIcon: {
+            label: 'Royal Caribbean Icon-Class',
+            badgeEmoji: '🌊',
+            heroImage: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80',
+            experienceCopy: 'Icon-class introduces high-energy neighborhoods, Surfside family hangouts, and next-gen thrills.',
+            rooms: royalIconRooms
+        }
+    };
+
+    const defaultCatalogKey = 'celebrityEdge';
+    const cruiseLineCatalogMap = {
+        'Celebrity Cruises': 'celebrityEdge',
+        'Royal Caribbean': 'royalIcon'
+    };
+
+    const roomKeyMapping = {
+        celebrityEdge: Object.keys(edgeRooms).reduce((map, key) => {
+            map[key] = key;
+            return map;
+        }, {}),
+        royalIcon: {
+            inside: 'iconInteriorPlus',
+            deluxeInside: 'iconSpaciousInterior',
+            oceanView: 'iconOceanView',
+            primeOceanView: 'iconPanoramicOceanView',
+            deluxeOceanView: 'iconFamilyOceanView',
+            panoramicOceanView: 'iconAquadomePanoramic',
+            deluxePorthole: 'iconSurfsideBalcony',
+            edgeInfinitePartial: 'iconInfiniteCentralParkView',
+            edgeInfinite: 'iconOceanViewBalcony',
+            primeEdgeInfinite: 'iconInfiniteOceanViewBalcony',
+            sunsetVeranda: 'iconSunsetCornerBalcony',
+            aquaclass: 'iconThermalSuiteBalcony',
+            primeAquaclass: 'iconPrimeThermalSuite',
+            aquaSky: 'iconSkyJuniorSuite',
+            magicCarpet: 'iconSurfsideFamilySuite',
+            skySuite: 'iconSunsetJuniorSuite',
+            sunsetSky: 'iconPanoramicCornerSuite',
+            celebrity: 'iconGrandSuite',
+            royal: 'iconIconLoftSuite',
+            conciergePartial: 'iconNeighborhoodBalconyPartial',
+            concierge: 'iconNeighborhoodBalcony',
+            primeConcierge: 'iconNeighborhoodBalconyPrime',
+            edgeVilla: 'iconSurfsideTownhouse',
+            penthouse: 'iconUltimateFamilyTownhouse',
+            iconic: 'iconRoyalLoftSuite'
+        }
+    };
+
     // Quiz Elements
     const allQuestions = Array.from(document.querySelectorAll('.question'));
     let visibleQuestions = [];
@@ -529,6 +964,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-quiz');
     const backBtn = document.getElementById('back-btn');
     const shipDetectionResult = document.getElementById('ship-detection-result');
+
+    function getActiveCatalogKey() {
+        const bookedLine = userTripDetails.bookedCruiseLine;
+        if (bookedLine && cruiseLineCatalogMap[bookedLine]) {
+            return cruiseLineCatalogMap[bookedLine];
+        }
+
+        const detectedShip = (userTripDetails.detectedShip || '').toLowerCase();
+        if (detectedShip.includes('icon')) {
+            return 'royalIcon';
+        }
+
+        if (Array.isArray(userTripDetails.priorCruiseLines) && userTripDetails.priorCruiseLines.includes('Royal Caribbean')) {
+            return 'royalIcon';
+        }
+
+        return defaultCatalogKey;
+    }
+
+    function resolveRoomKeyForCatalog(baseKey, catalogKey) {
+        const mapping = roomKeyMapping[catalogKey] || {};
+        return mapping[baseKey] || baseKey;
+    }
+
+    function getRoomRecommendation(baseKey) {
+        const catalogKey = getActiveCatalogKey();
+        const resolvedKey = resolveRoomKeyForCatalog(baseKey, catalogKey);
+        const catalog = roomCatalogs[catalogKey] || roomCatalogs[defaultCatalogKey];
+        const room = catalog.rooms[resolvedKey];
+
+        if (room) {
+            return { room, catalogKey, resolvedKey };
+        }
+
+        const fallbackCatalog = roomCatalogs[defaultCatalogKey];
+        return {
+            room: fallbackCatalog.rooms[baseKey] || Object.values(fallbackCatalog.rooms)[0],
+            catalogKey: defaultCatalogKey,
+            resolvedKey: baseKey
+        };
+    }
 
     // Initialize Quiz
     initializeQuiz();
@@ -656,6 +1132,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (cruiseLine === 'Royal Caribbean') {
+            if (destinationLower.includes('perfect day') || destinationLower.includes('coco cay') || destinationLower.includes('miami') || destinationLower.includes('icon')) {
+                return 'Icon of the Seas';
+            }
             return 'Wonder of the Seas';
         }
 
@@ -891,7 +1370,8 @@ document.addEventListener('DOMContentLoaded', () => {
             concierge: 0,
             primeConcierge: 0,
             edgeVilla: 0,
-            penthouse: 0
+            penthouse: 0,
+            iconic: 0
         };
 
         // Inside Staterooms scoring (most budget-friendly - no windows)
@@ -998,6 +1478,10 @@ document.addEventListener('DOMContentLoaded', () => {
         roomScores.penthouse += scores.space * 3;
         roomScores.penthouse += scores.family * 3;
 
+        roomScores.iconic += scores.luxury * 4;
+        roomScores.iconic += scores.space * 4;
+        roomScores.iconic += scores.family * 2;
+
         // Find room with highest score
         let bestRoom = 'aquaclass';
         let highestScore = roomScores.aquaclass;
@@ -1018,25 +1502,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Calculate best room
         const bestRoomKey = calculateBestRoom();
-        const bestRoom = rooms[bestRoomKey];
+        const { room: bestRoom, catalogKey } = getRoomRecommendation(bestRoomKey);
+        const catalogMeta = roomCatalogs[catalogKey] || roomCatalogs[defaultCatalogKey];
+        const brandAccent = catalogKey === 'royalIcon' ? 'rgba(0, 174, 239, 0.2)' : 'rgba(255, 255, 255, 0.15)';
+        const brandBanner = catalogMeta ? `
+            <div style="display: flex; align-items: center; gap: 1.5rem; background: ${brandAccent}; padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;">
+                    <p style="margin: 0; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.85rem; opacity: 0.8;">${catalogMeta.badgeEmoji} ${catalogMeta.label}</p>
+                    <p style="margin: 0.4rem 0 0; font-size: 1rem;">${catalogMeta.experienceCopy}</p>
+                </div>
+                <img src="${catalogMeta.heroImage}" alt="${catalogMeta.label} hero" style="width: 160px; height: 120px; object-fit: cover; border-radius: 12px; flex-shrink: 0;" />
+            </div>
+        ` : '';
 
         // Track quiz completion and room recommendation
         if (typeof gtag !== 'undefined') {
             gtag('event', 'quiz_completed', {
                 recommended_room: bestRoom.name,
                 room_key: bestRoomKey,
-                room_price: bestRoom.price
+                room_price: bestRoom.price,
+                cruise_catalog: catalogKey
             });
         }
 
         // Build result HTML
         let resultHTML = `
+            ${brandBanner}
             <div style="text-align: center; margin-bottom: 2rem;">
                 <div style="font-size: 4rem; margin-bottom: 1rem;">${bestRoom.icon}</div>
                 <h4>${bestRoom.name}</h4>
                 <p style="font-size: 1.1rem; opacity: 0.95; margin-top: 1rem;">
                     ${bestRoom.description}
                 </p>
+                ${catalogMeta ? `<p style="font-size: 0.95rem; margin-top: 0.5rem; opacity: 0.85;">This pick channels the <strong>${catalogMeta.label}</strong> vibe for your sailing.</p>` : ''}
             </div>
 
             <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 12px; margin: 2rem 0;">
@@ -1288,8 +1786,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Console welcome message
-    console.log('%c⚓ Celebrity Edge-Class Room Picker', 'color: #1d4e89; font-size: 20px; font-weight: bold;');
-    console.log('%cWelcome! Find your perfect stateroom.', 'color: #4fc3c8; font-size: 14px;');
+    console.log('%c⚓ Edge + Icon Room Picker', 'color: #1d4e89; font-size: 20px; font-weight: bold;');
+    console.log('%cWelcome! Find your perfect Celebrity Edge or Royal Caribbean Icon match.', 'color: #4fc3c8; font-size: 14px;');
 });
 
 // Utility function to format price ranges
