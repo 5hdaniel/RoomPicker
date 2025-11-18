@@ -964,6 +964,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-quiz');
     const backBtn = document.getElementById('back-btn');
     const shipDetectionResult = document.getElementById('ship-detection-result');
+    const shareTools = document.getElementById('share-tools');
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const shareLinkInput = document.getElementById('share-link');
+    const copyShareLinkBtn = document.getElementById('copy-share-link');
+    const inviteForm = document.getElementById('invite-form');
+    const inviteEmailInput = document.getElementById('invite-email');
+    const inviteFeedback = document.getElementById('invite-feedback');
+    const authStatus = document.getElementById('auth-status');
+    const authModal = document.getElementById('auth-modal');
+    const authModalTitle = document.getElementById('auth-modal-title');
+    const authModalMessage = document.getElementById('auth-modal-message');
+    const authModalConfirm = document.getElementById('auth-modal-confirm');
+    const authModalClose = document.getElementById('auth-modal-close');
+    const authModalLoginLink = document.getElementById('auth-modal-login-link');
+
+    let isAuthenticated = false;
+    let pendingAuthMode = 'login';
 
     function getActiveCatalogKey() {
         const bookedLine = userTripDetails.bookedCruiseLine;
@@ -1006,6 +1024,157 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    function setupCollaborationCtas() {
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => handleAuthRequest('login'));
+        }
+        if (signupBtn) {
+            signupBtn.addEventListener('click', () => handleAuthRequest('signup'));
+        }
+        if (copyShareLinkBtn) {
+            copyShareLinkBtn.addEventListener('click', copyShareLink);
+        }
+        if (inviteForm) {
+            inviteForm.addEventListener('submit', handleInviteSubmit);
+        }
+        if (authModalConfirm) {
+            authModalConfirm.addEventListener('click', completeAuthFlow);
+        }
+        if (authModalClose) {
+            authModalClose.addEventListener('click', closeAuthModal);
+        }
+        if (authModal) {
+            authModal.addEventListener('click', (event) => {
+                if (event.target === authModal) {
+                    closeAuthModal();
+                }
+            });
+        }
+    }
+
+    function handleAuthRequest(mode = 'login') {
+        pendingAuthMode = mode;
+        if (authModal) {
+            openAuthModal(mode);
+            return;
+        }
+
+        window.location.href = '/login';
+    }
+
+    function openAuthModal(mode) {
+        const isLogin = mode === 'login';
+        if (authModalTitle) {
+            authModalTitle.textContent = isLogin
+                ? 'Log in to share your match'
+                : 'Sign up to share your match';
+        }
+        if (authModalMessage) {
+            authModalMessage.textContent = isLogin
+                ? 'Sign in to unlock shareable links and invite your travel companions.'
+                : 'Create a free profile to send invites and compare results with your crew.';
+        }
+        if (authModalLoginLink) {
+            authModalLoginLink.textContent = isLogin ? 'Use classic login page' : 'Prefer the signup page?';
+            authModalLoginLink.href = isLogin ? '/login' : '/signup';
+        }
+
+        authModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAuthModal() {
+        if (!authModal) return;
+        authModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function completeAuthFlow() {
+        isAuthenticated = true;
+        updateShareTools();
+        if (authStatus) {
+            authStatus.textContent = pendingAuthMode === 'signup'
+                ? 'Welcome aboard! Sharing tools are now unlocked.'
+                : 'Sharing unlocked! Send your link or invite your crew.';
+        }
+        closeAuthModal();
+    }
+
+    function copyShareLink() {
+        if (!isAuthenticated) {
+            handleAuthRequest('login');
+            return;
+        }
+        if (!shareLinkInput) return;
+
+        const linkValue = shareLinkInput.value;
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            navigator.clipboard.writeText(linkValue).then(() => {
+                if (inviteFeedback) {
+                    inviteFeedback.textContent = 'Copied! Share it with your fellow travelers.';
+                }
+            }).catch(() => {
+                fallbackCopy(linkValue);
+            });
+        } else {
+            fallbackCopy(linkValue);
+        }
+    }
+
+    function fallbackCopy(text) {
+        if (!shareLinkInput) return;
+        shareLinkInput.select();
+        document.execCommand('copy');
+        if (inviteFeedback) {
+            inviteFeedback.textContent = 'Copied! Share it with your fellow travelers.';
+        }
+    }
+
+    function handleInviteSubmit(event) {
+        event.preventDefault();
+        if (!isAuthenticated) {
+            handleAuthRequest('signup');
+            return;
+        }
+
+        const email = inviteEmailInput ? inviteEmailInput.value.trim() : '';
+        if (!email) {
+            if (inviteFeedback) {
+                inviteFeedback.textContent = 'Please enter an email address to send an invite.';
+            }
+            return;
+        }
+
+        if (inviteFeedback) {
+            inviteFeedback.textContent = `Invite sent to ${email}!`;
+        }
+        inviteEmailInput.value = '';
+    }
+
+    function updateShareTools(roomKey) {
+        if (!shareLinkInput) return;
+        const shareLink = generateShareLink(roomKey);
+        shareLinkInput.value = shareLink;
+
+        if (isAuthenticated) {
+            shareTools && shareTools.classList.remove('hidden');
+        } else {
+            shareTools && shareTools.classList.add('hidden');
+            if (authStatus) {
+                authStatus.textContent = 'Log in or sign up to unlock sharing tools.';
+            }
+        }
+    }
+
+    function generateShareLink(roomKey) {
+        const shareUrl = new URL(window.location.href);
+        shareUrl.hash = 'quiz-result';
+        if (roomKey) {
+            shareUrl.searchParams.set('match', roomKey);
+        }
+        return shareUrl.toString();
+    }
+
     // Initialize Quiz
     initializeQuiz();
 
@@ -1021,6 +1190,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Back button
         backBtn.addEventListener('click', previousQuestion);
+
+        setupCollaborationCtas();
 
         updateVisibleQuestions();
         showQuestion(0);
@@ -1565,6 +1736,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         resultContent.innerHTML = resultHTML;
+        updateShareTools(bestRoomKey);
         quizResult.classList.remove('hidden');
 
         // Special fireworks animation for Iconic Suite!

@@ -212,6 +212,40 @@
             <div id="quiz-result" class="quiz-result hidden">
                 <h3>Your Perfect Match:</h3>
                 <div id="result-content"></div>
+                <p class="comparison-message">
+                    Planning with friends or family? Encourage everyone to compare picks and lock in the room that makes the most sense for the whole crew.
+                </p>
+                <div class="result-actions">
+                    <div class="auth-cta" id="result-auth-cta">
+                        <h4>Save & compare with your travel party</h4>
+                        <p>Log in or create a free Room Picker profile to unlock sharing tools and keep tabs on everyone’s favorites.</p>
+                        <div class="cta-buttons">
+                            <button id="login-btn" class="outline-btn" type="button">Log In</button>
+                            <button id="signup-btn" class="primary-btn" type="button">Sign Up Free</button>
+                        </div>
+                        <p id="auth-status" class="auth-status" role="status" aria-live="polite"></p>
+                    </div>
+                    <div id="share-tools" class="share-tools hidden" aria-live="polite">
+                        <h4>Share your quiz match</h4>
+                        <p>Send a personalized link or email invite so your companions can see your recommendation and take the quiz too.</p>
+                        <label class="share-field">
+                            <span>Shareable link</span>
+                            <div class="share-input">
+                                <input id="share-link" type="text" readonly value="" aria-label="Shareable quiz link" />
+                                <button id="copy-share-link" class="secondary-btn" type="button">Copy Link</button>
+                            </div>
+                        </label>
+                        <form id="invite-form" class="invite-form">
+                            <label for="invite-email">Invite by email</label>
+                            <div class="invite-input-row">
+                                <input id="invite-email" type="email" placeholder="friend@example.com" required />
+                                <button class="primary-btn" type="submit">Send Invite</button>
+                            </div>
+                        </form>
+                        <p id="invite-feedback" class="invite-feedback" role="status" aria-live="polite"></p>
+                        <p class="share-note">Compare notes together and make sure everyone’s dream cruise vibe is represented.</p>
+                    </div>
+                </div>
                 <button id="restart-quiz" class="restart-btn">Take Quiz Again</button>
             </div>
         </div>
@@ -611,6 +645,19 @@
             <p class="privacy-notice">We improve our products and advertising by using Microsoft Clarity to see how you use our website. By using our site, you agree that we and Microsoft can collect and use this data. Our <a href="privacy.html">privacy statement</a> has more details.</p>
         </div>
     </footer>
+
+    <div id="auth-modal" class="auth-modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+        <div class="auth-modal__panel">
+            <button type="button" class="auth-modal__close" id="auth-modal-close" aria-label="Close authentication prompt">&times;</button>
+            <p class="auth-modal__eyebrow">Room Picker</p>
+            <h3 id="auth-modal-title">Log in to share your match</h3>
+            <p id="auth-modal-message">Sign in to unlock sharing tools and invite your travel companions.</p>
+            <div class="auth-modal__actions">
+                <button id="auth-modal-confirm" class="primary-btn" type="button">Continue</button>
+                <a id="auth-modal-login-link" class="auth-modal__link" href="/login">Use classic login page</a>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
