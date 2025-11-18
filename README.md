@@ -7,7 +7,7 @@ An interactive one-page website to help cruise travelers compare and choose the 
 ### 📋 Interactive Quiz
 - **7-question quiz** that analyzes your preferences
 - Smart recommendation algorithm based on your answers
-- Special personalized recommendation for Andy!
+- Tailored follow-up prompts to personalize recommendations for every cruiser
 - Questions cover:
   - Travel priorities (wellness vs. luxury)
   - Group size
@@ -57,7 +57,7 @@ Compare all 25 Celebrity Edge-Class accommodation types side-by-side:
 - **Edge Villa** - TWO-STORY with private plunge pool (unique!)
 - **Penthouse Suite** - 2-bedroom family suite with hot tub
 - **Royal Suite** - Ultimate VIP experience
-- **Iconic Suite** - Largest suite in Celebrity fleet (2,581 sq ft - special recommendation for Andy!)
+- **Iconic Suite** - Largest suite in Celebrity fleet (2,581 sq ft)
 
 ### 🎯 Quick Decision Guide
 Visual cards highlighting each room type with:

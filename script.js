@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Welcome bottle of bubbles'
             ],
             price: 'Starting from $28,768/person',
-            bestFor: 'those seeking the absolute ultimate luxury experience - the crown jewel of Celebrity Cruises (Hi Andy! 👋)'
+            bestFor: 'those seeking the absolute ultimate luxury experience - the crown jewel of Celebrity Cruises'
         },
         conciergePartial: {
             name: 'Concierge Class (Partial View)',
@@ -989,6 +989,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const comparisonDigest = document.getElementById('comparison-digest');
     const roomDirectoryContainers = document.querySelectorAll('[data-room-directory]');
     const digestCtas = document.querySelectorAll('.digest-cta');
+    const celebrityHierarchySection = document.getElementById('celebrity-hierarchy');
 
     let isAuthenticated = false;
     let pendingAuthMode = 'login';
@@ -1018,6 +1019,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function resolveRoomKeyForCatalog(baseKey, catalogKey) {
         const mapping = roomKeyMapping[catalogKey] || {};
         return mapping[baseKey] || baseKey;
+    }
+
+    function toggleCelebrityHierarchy(shouldShow = false) {
+        if (!celebrityHierarchySection) return;
+        celebrityHierarchySection.classList.toggle('hidden', !shouldShow);
+        celebrityHierarchySection.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
     }
 
     function getRoomRecommendation(baseKey) {
@@ -1924,6 +1931,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateShareTools(bestRoomKey);
         quizResult.classList.remove('hidden');
         lastRecommendationMeta = { catalogKey, resolvedKey };
+        toggleCelebrityHierarchy(catalogKey === 'celebrityEdge');
         if (viewRoomDetailsBtn) {
             viewRoomDetailsBtn.textContent = `See ${bestRoom.name} in the comparison table`;
             viewRoomDetailsBtn.classList.remove('hidden');
@@ -2080,6 +2088,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizResult.classList.add('hidden');
         quizResult.classList.remove('iconic-result');
         lastRecommendationMeta = null;
+        toggleCelebrityHierarchy(false);
         if (viewRoomDetailsBtn) {
             viewRoomDetailsBtn.classList.add('hidden');
         }
