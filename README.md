@@ -98,6 +98,36 @@ php -S localhost:8000
 
 Then visit `http://localhost:8000` in your browser.
 
+### Pulling the Latest `work` Branch
+
+The active feature work for the multi-step quiz lives on a branch named `work`.
+On GitHub the same branch appears as `claude/cruise-room-comparison-quiz-011CV1aigqnfTDMChWVS5ZNa`,
+so collaborators only see that single branch in the remote list. To work with it
+locally, fetch it explicitly and create a local branch called `work` that tracks
+the remote branch:
+
+```bash
+git fetch origin claude/cruise-room-comparison-quiz-011CV1aigqnfTDMChWVS5ZNa:work
+git checkout work
+
+# (one-time) link the local branch to the remote-only branch so `git pull` works
+git branch --set-upstream-to=origin/claude/cruise-room-comparison-quiz-011CV1aigqnfTDMChWVS5ZNa work
+
+# verify you're on the latest commit
+git log -1 --oneline
+```
+
+- `git fetch …:work` creates (or updates) a local `work` branch that mirrors the
+  remote-only branch name.
+- `git branch --set-upstream-to=…` tells Git that `work` should pull from the
+  remote branch, so subsequent `git pull` commands will succeed without extra
+  arguments.
+
+> **Tip:** Copy the `git fetch` command exactly as written above. Using a unicode
+> ellipsis character (`…`) instead of the literal ASCII sequence `...` causes Git
+> to treat the hostname as invalid and results in the error `hostname contains
+> invalid characters`.
+
 ### Deploy to GitHub Pages
 
 1. Push this repository to GitHub

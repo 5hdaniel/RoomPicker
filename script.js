@@ -2,17 +2,29 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Quiz State
-    let currentQuestion = 1;
-    const totalQuestions = 7;
+    let currentQuestionIndex = 0;
+    let totalQuestions = 0;
+    let bookingStatus = null;
     let scores = {
         wellness: 0,
         luxury: 0,
         value: 0,
         space: 0,
         couple: 0,
-        family: 0,
-        andy: 0,
-        notandy: 0
+        family: 0
+    };
+    const userTripDetails = {
+        bookingStatus: null,
+        bookedCruiseLine: '',
+        bookedDestination: '',
+        bookedStartDate: '',
+        bookedEndDate: '',
+        detectedShip: '',
+        intendedDestination: '',
+        intendedMonth: '',
+        cruiseHistoryCount: '',
+        priorCruiseLines: [],
+        planningBudget: ''
     };
     let answerHistory = []; // Track answers for back functionality
 
@@ -509,12 +521,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Quiz Elements
-    const questions = document.querySelectorAll('.question');
+    const allQuestions = Array.from(document.querySelectorAll('.question'));
+    let visibleQuestions = [];
     const quizContainer = document.getElementById('quiz-container');
     const quizResult = document.getElementById('quiz-result');
     const resultContent = document.getElementById('result-content');
     const restartBtn = document.getElementById('restart-quiz');
     const backBtn = document.getElementById('back-btn');
+    const shipDetectionResult = document.getElementById('ship-detection-result');
 
     // Initialize Quiz
     initializeQuiz();
@@ -532,19 +546,232 @@ document.addEventListener('DOMContentLoaded', () => {
         // Back button
         backBtn.addEventListener('click', previousQuestion);
 
+        updateVisibleQuestions();
+        showQuestion(0);
+        setupShipDetection();
+
         // Hide back button on first question
         updateBackButton();
     }
 
+    function updateVisibleQuestions() {
+        visibleQuestions = allQuestions.filter((question, index) => {
+            if (question.dataset.question === '1') {
+                return true;
+            }
+
+            const path = question.dataset.path || 'both';
+            if (!bookingStatus) {
+                return false;
+            }
+
+            if (path === 'booked') {
+                return bookingStatus === 'booked';
+            }
+
+            if (path === 'not-booked') {
+                return bookingStatus === 'not-booked';
+            }
+
+            return true;
+        });
+
+        if (visibleQuestions.length === 0 && allQuestions.length > 0) {
+            visibleQuestions = [allQuestions[0]];
+        }
+
+        totalQuestions = visibleQuestions.length;
+    }
+
+    function showQuestion(index) {
+        allQuestions.forEach(question => question.classList.remove('active'));
+        const nextQuestionElement = visibleQuestions[index];
+        if (nextQuestionElement) {
+            nextQuestionElement.classList.add('active');
+        }
+        currentQuestionIndex = index;
+        updateBackButton();
+    }
+
+    function getCurrentQuestionElement() {
+        return visibleQuestions[currentQuestionIndex];
+    }
+
+    function getFieldValue(id) {
+        const element = document.getElementById(id);
+        return element ? element.value : '';
+    }
+
+    function setupShipDetection() {
+        const bookedInputIds = [
+            'booked-cruise-line',
+            'booked-destination',
+            'booked-start-date',
+            'booked-end-date'
+        ];
+
+        bookedInputIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', updateShipDetectionDisplay);
+            }
+        });
+    }
+
+    function updateShipDetectionDisplay() {
+        if (!shipDetectionResult) return;
+
+        const cruiseLine = getFieldValue('booked-cruise-line');
+        const destination = getFieldValue('booked-destination');
+
+        if (!cruiseLine && !destination) {
+            shipDetectionResult.textContent = 'Provide details to auto-detect your ship.';
+            userTripDetails.detectedShip = '';
+            return;
+        }
+
+        const shipName = detectShip(cruiseLine, destination);
+        userTripDetails.detectedShip = shipName;
+        shipDetectionResult.textContent = shipName
+            ? `Likely ship: ${shipName}`
+            : 'Provide details to auto-detect your ship.';
+    }
+
+    function detectShip(cruiseLine, destination) {
+        if (!cruiseLine) return '';
+
+        const destinationLower = (destination || '').toLowerCase();
+
+        if (cruiseLine === 'Celebrity Cruises') {
+            if (destinationLower.includes('caribbean') || destinationLower.includes('bahamas')) {
+                return 'Celebrity Edge';
+            }
+            if (destinationLower.includes('mediterranean') || destinationLower.includes('europe')) {
+                return 'Celebrity Ascent';
+            }
+            if (destinationLower.includes('alaska')) {
+                return 'Celebrity Edge (Alaska season)';
+            }
+            return 'Celebrity Apex';
+        }
+
+        if (cruiseLine === 'Royal Caribbean') {
+            return 'Wonder of the Seas';
+        }
+
+        if (cruiseLine === 'Norwegian Cruise Line') {
+            return 'Norwegian Prima';
+        }
+
+        if (cruiseLine === 'Princess Cruises') {
+            return 'Discovery Princess';
+        }
+
+        if (cruiseLine === 'Virgin Voyages') {
+            return 'Scarlet Lady';
+        }
+
+        return `${cruiseLine} flagship`;
+    }
+
     function handleAnswer(e) {
         const button = e.currentTarget;
-        const points = JSON.parse(button.getAttribute('data-points'));
-        const answerText = button.textContent;
+        const pointsAttr = button.getAttribute('data-points') || '{}';
+        let points = {};
+        try {
+            points = JSON.parse(pointsAttr);
+        } catch (err) {
+            points = {};
+        }
+        const questionElement = getCurrentQuestionElement();
+        const questionNumber = (questionElement && questionElement.dataset && questionElement.dataset.question)
+            ? questionElement.dataset.question
+            : (currentQuestionIndex + 1);
+        const answerText = button.textContent.trim();
+        const action = button.dataset.action;
+        let shouldAdvance = true;
+
+        switch (action) {
+            case 'set-booking-status': {
+                const value = button.dataset.value;
+                if (!value) {
+                    shouldAdvance = false;
+                    break;
+                }
+                bookingStatus = value;
+                userTripDetails.bookingStatus = value;
+                updateVisibleQuestions();
+                showQuestion(currentQuestionIndex);
+                break;
+            }
+            case 'save-booked-info': {
+                const cruiseLine = getFieldValue('booked-cruise-line') || '';
+                const destination = getFieldValue('booked-destination').trim() || '';
+                const startDate = getFieldValue('booked-start-date') || '';
+                const endDate = getFieldValue('booked-end-date') || '';
+
+                if (!cruiseLine || !destination || !startDate || !endDate) {
+                    alert('Please complete all cruise details before continuing.');
+                    shouldAdvance = false;
+                    break;
+                }
+
+                userTripDetails.bookedCruiseLine = cruiseLine;
+                userTripDetails.bookedDestination = destination;
+                userTripDetails.bookedStartDate = startDate;
+                userTripDetails.bookedEndDate = endDate;
+                updateShipDetectionDisplay();
+                break;
+            }
+            case 'save-intended-trip': {
+                const destination = getFieldValue('intended-destination').trim() || '';
+                const month = getFieldValue('intended-month') || '';
+                if (!destination || !month) {
+                    alert('Please add a destination and month for your future cruise.');
+                    shouldAdvance = false;
+                    break;
+                }
+                userTripDetails.intendedDestination = destination;
+                userTripDetails.intendedMonth = month;
+                break;
+            }
+            case 'save-history': {
+                const historyCount = getFieldValue('cruise-history-count');
+                if (historyCount === '' || historyCount === null || historyCount === undefined) {
+                    alert('Let us know how many cruises you have taken.');
+                    shouldAdvance = false;
+                    break;
+                }
+                userTripDetails.cruiseHistoryCount = historyCount;
+                break;
+            }
+            case 'save-prior-lines': {
+                const selectedLines = Array.from(document.querySelectorAll('input[name="prior-lines"]:checked')).map(cb => cb.value);
+                userTripDetails.priorCruiseLines = selectedLines;
+                break;
+            }
+            case 'record-planning-budget': {
+                const budget = getFieldValue('planning-budget') || '';
+                if (!budget) {
+                    alert('Please choose a budget range to continue.');
+                    shouldAdvance = false;
+                    break;
+                }
+                userTripDetails.planningBudget = budget;
+                break;
+            }
+            default:
+                break;
+        }
+
+        if (!shouldAdvance) {
+            return;
+        }
 
         // Track quiz answer with Google Analytics
         if (typeof gtag !== 'undefined') {
             gtag('event', 'quiz_answer', {
-                question_number: currentQuestion,
+                question_number: Number(questionNumber),
                 answer: answerText,
                 points_awarded: JSON.stringify(points)
             });
@@ -552,7 +779,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Save answer to history
         answerHistory.push({
-            questionNumber: currentQuestion,
             points: points
         });
 
@@ -568,34 +794,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Move to next question or show results
         setTimeout(() => {
-            if (currentQuestion < totalQuestions) {
-                nextQuestion();
-            } else {
-                showResults();
-            }
+            nextQuestion();
         }, 300);
     }
 
     function nextQuestion() {
-        // Hide current question
-        questions[currentQuestion - 1].classList.remove('active');
+        if (currentQuestionIndex >= totalQuestions - 1) {
+            showResults();
+            return;
+        }
 
-        // Show next question
-        currentQuestion++;
-        questions[currentQuestion - 1].classList.add('active');
-
-        // Update back button visibility
-        updateBackButton();
+        showQuestion(currentQuestionIndex + 1);
     }
 
     function previousQuestion() {
-        if (currentQuestion <= 1) return;
+        if (currentQuestionIndex <= 0) return;
+
+        const currentElement = getCurrentQuestionElement();
+        const previousElement = visibleQuestions[currentQuestionIndex - 1];
+        const fromQuestion = (currentElement && currentElement.dataset && currentElement.dataset.question)
+            ? currentElement.dataset.question
+            : (currentQuestionIndex + 1);
+        const toQuestion = (previousElement && previousElement.dataset && previousElement.dataset.question)
+            ? previousElement.dataset.question
+            : currentQuestionIndex;
 
         // Track back button usage
         if (typeof gtag !== 'undefined') {
             gtag('event', 'quiz_back_button', {
-                from_question: currentQuestion,
-                to_question: currentQuestion - 1
+                from_question: Number(fromQuestion),
+                to_question: Number(toQuestion)
             });
         }
 
@@ -610,34 +838,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Reset button styles for current question
-        const currentButtons = questions[currentQuestion - 1].querySelectorAll('.option');
+        const currentButtons = currentElement ? currentElement.querySelectorAll('.option') : [];
         currentButtons.forEach(btn => {
             btn.style.background = '';
             btn.style.color = '';
             btn.style.transform = '';
         });
 
-        // Hide current question
-        questions[currentQuestion - 1].classList.remove('active');
-
         // Show previous question
-        currentQuestion--;
-        questions[currentQuestion - 1].classList.add('active');
+        showQuestion(currentQuestionIndex - 1);
 
-        // Reset button styles for previous question
-        const prevButtons = questions[currentQuestion - 1].querySelectorAll('.option');
-        prevButtons.forEach(btn => {
+        const newCurrentElement = getCurrentQuestionElement();
+        const previousButtons = newCurrentElement ? newCurrentElement.querySelectorAll('.option') : [];
+        previousButtons.forEach(btn => {
             btn.style.background = '';
             btn.style.color = '';
             btn.style.transform = '';
         });
-
-        // Update back button visibility
-        updateBackButton();
     }
 
     function updateBackButton() {
-        if (currentQuestion === 1) {
+        if (currentQuestionIndex === 0) {
             backBtn.classList.add('hidden');
         } else {
             backBtn.classList.remove('hidden');
@@ -645,11 +866,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateBestRoom() {
-        // Special case: If the user is Andy, they get the Iconic Suite!
-        if (scores.andy > 0) {
-            return 'iconic';
-        }
-
         // Scoring algorithm to determine best room match
         const roomScores = {
             inside: 0,
@@ -943,16 +1159,30 @@ document.addEventListener('DOMContentLoaded', () => {
             value: 0,
             space: 0,
             couple: 0,
-            family: 0,
-            andy: 0,
-            notandy: 0
+            family: 0
         };
+
+        Object.assign(userTripDetails, {
+            bookingStatus: null,
+            bookedCruiseLine: '',
+            bookedDestination: '',
+            bookedStartDate: '',
+            bookedEndDate: '',
+            detectedShip: '',
+            intendedDestination: '',
+            intendedMonth: '',
+            cruiseHistoryCount: '',
+            priorCruiseLines: [],
+            planningBudget: ''
+        });
 
         // Reset answer history
         answerHistory = [];
 
-        // Reset question counter
-        currentQuestion = 1;
+        // Reset question counter and flow
+        bookingStatus = null;
+        currentQuestionIndex = 0;
+        updateVisibleQuestions();
 
         // Reset button styles
         const optionButtons = document.querySelectorAll('.option');
@@ -961,6 +1191,30 @@ document.addEventListener('DOMContentLoaded', () => {
             button.style.color = '';
             button.style.transform = '';
         });
+
+        // Reset form fields
+        const formFields = [
+            'booked-cruise-line',
+            'booked-destination',
+            'booked-start-date',
+            'booked-end-date',
+            'intended-destination',
+            'intended-month',
+            'cruise-history-count',
+            'planning-budget'
+        ];
+        formFields.forEach(id => {
+            const field = document.getElementById(id);
+            if (field) {
+                field.value = '';
+            }
+        });
+        document.querySelectorAll('input[name="prior-lines"]').forEach(input => {
+            input.checked = false;
+        });
+        if (shipDetectionResult) {
+            shipDetectionResult.textContent = 'Provide details to auto-detect your ship.';
+        }
 
         // Hide results
         quizResult.classList.add('hidden');
@@ -976,16 +1230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizContainer.style.display = 'block';
 
         // Show first question
-        questions.forEach((q, index) => {
-            if (index === 0) {
-                q.classList.add('active');
-            } else {
-                q.classList.remove('active');
-            }
-        });
-
-        // Update back button (hide on first question)
-        updateBackButton();
+        showQuestion(0);
 
         // Smooth scroll to quiz
         setTimeout(() => {
@@ -1041,9 +1286,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.style.transform = 'scale(1)';
         });
     });
-
-    // Progress indicator
-    const totalQuestionCount = document.querySelectorAll('.question').length;
 
     // Console welcome message
     console.log('%c⚓ Celebrity Edge-Class Room Picker', 'color: #1d4e89; font-size: 20px; font-weight: bold;');
